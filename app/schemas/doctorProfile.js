@@ -12,10 +12,12 @@ const definition = new mongoose.Schema({
   age: Number,
   availability: Boolean,
   availableTime: String,
-  reviews: {
-    type: String,
-    star: Number,
-  },
+  reviews: [
+    {
+      type: String,
+      star: Number,
+    },
+  ],
 });
 
 module.exports = definition;
