@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- <link href="/public/css/style.css" rel="stylesheet" type="text/css"> -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href=" ">Generate Ticket</a>
+			</div>
+			<div class="  collapse navbar-collapse ">
+
+				<ul class="nav navbar-nav navbar-right mr-auto">
+					<% doc.forEach(function(det){ %>
+						<li><b style="color: black;"><%= det.username %></b></li>
+						<% for (let img of det.imagee){%>	
+
+							<li >
+							<img src="<%=img.url %>" style="width:46px; height: 46px; border-radius: 50%; overflow:hidden; margin-top:-6px" class="img-fluid"  onclick="myfunction(src)">
+							</li>
+						<script>
+							function myfunction(x){
+								// location.href = x;
+								document.write("<img src="+x+" style=width:auto,height:auto /0>");
+							}
+						</script>
+						<% } %>
+					<li style="font-size: large;"><a   href="/profile/<%= det._id %>">Profile</a></li>
+					<% }) %>
+					<li  style="font-size: large;text-align: center;"><a href="/">Logout</a></li>
+				</ul>
+				
+			</div>
+		</div>
+	</nav>
+
+
+
+
+
+
+<div class="container">
+<div style="text-align:center">	
+<h2>New Ticket </h2>
+</div>
+
+<div   style="width:30%; margin: 0 auto;">
+	<form method="POST" action="/display" enctype="multipart/form-data">
+		<div class="form-group">
+			<input class="form-control" type="text" name="clientname" placeholder="Client name">
+        </div>
+        <div class="form-group">
+			<input class="form-control" type="text" name="desc" placeholder="decsribe">
+		</div>
+
+
+		<div class="form-group">
+            <input type="file" id="image" name="image" multiple>
+		</div>
+        <div class="form-group">
+			<input class="form-control" type="text" name="name" placeholder="name">
+        </div>
+		<div class="form-group">
+			<input class="form-control" type="datetime" name="date" placeholder="date">
+		</div>
+		<div class="form-group">
+			<button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
+		</div>
+	</form>
+<a href="/display">View Tickets</a>
+</div>
+</div>
+
+<%- include('partials/footer')%>

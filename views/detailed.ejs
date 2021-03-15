@@ -1,0 +1,17 @@
+<%- include('partials/header')%>
+<div class="container">
+<div  class="jumbotron">
+	<h1>Generated passwords</h1>
+   </div>
+
+<div class="row">
+
+<% arre.forEach(function(det){%>
+	<div  class="thumbnail">
+	<p><%= det.username %></p>	
+	<p><%= det.password %></p>
+    </div>
+<%});%>
+</div>
+</div>
+<%- include('partials/footer')%>
