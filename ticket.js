@@ -14,7 +14,7 @@ var multer = require("multer");
 var { storage } = require("./cloudinary");
 var upload = multer({ storage });
 var session = require("express-session");
-var cors= require("cors");
+
 
 mongoose.connect('mongodb://localhost:27017/trs', { useNewUrlParser: true, useUnifiedTopology: true });
 
