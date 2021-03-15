@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 const definition = new mongoose.Schema({
   username: {
     type: String,
-    //unique: true,
+    unique: true,
     required: [true, 'Username cannot be blank'],
   },
   password: {

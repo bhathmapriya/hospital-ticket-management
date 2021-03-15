@@ -9,13 +9,13 @@ var bcrypt = require('bcrypt');
 var session = require('express-session');
 const userSchema = require('./schemas/user');
 
-var user = new mongoose.model('users', userSchema);
+var register = new mongoose.model('register', userSchema);
 
 router.post('/', upload.array('imagee'), async (req, res) => {
   var { password, username, imagee, mobilenumber, address, email } = req.body;
   imagee = req.files.map((f) => ({ url: f.path, filename: f.filename }));
   var hash = await bcrypt.hash(password, 12);
-  var user = new user({
+  var user = new register({
     username,
     password: hash,
     mobilenumber,
@@ -31,7 +31,7 @@ router.post('/', upload.array('imagee'), async (req, res) => {
 
 router.post('/login', async (req, res) => {
   var { password, username, mobilenumber, imagee, address, email } = req.body;
-  var user = await user.findOne({ username });
+  var user = await register.findOne({ username });
   console.log(user);
 
   var validuser = await bcrypt.compare(password, user.password);
@@ -57,7 +57,7 @@ router.get('/ticketgen/:id', async (req, res) => {
     // console.log(userr.password);
     // var name=userr.username;
     //console.log(userr);
-    user.find({ _id: id }, function (err, doc) {
+    register.find({ _id: id }, function (err, doc) {
       if (err) {
         console.log(err);
       } else {
@@ -85,7 +85,7 @@ router.get('/ticketgen/:id', async (req, res) => {
 
 router.get('/profile/:id', function (req, res) {
   var id = req.params.id;
-  user.find({ _id: id }, function (err, data) {
+  register.find({ _id: id }, function (err, data) {
     if (err) {
       console.log(err);
     } else {

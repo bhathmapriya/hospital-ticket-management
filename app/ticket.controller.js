@@ -7,14 +7,14 @@ var { storage } = require('../cloudinary');
 var upload = multer({ storage });
 const ticketDefinition = require('./schemas/ticket.js');
 
-const ticket = new mongoose.model('tickets', ticketDefinition);
+const tickets = new mongoose.model('tickets', ticketDefinition);
 
 router.get('/display', function (req, res) {
   if (!req.session?.user_id) {
     res.redirect('/login');
   }
 
-  ticket.find({}, function (err, ans) {
+  tickets.find({}, function (err, ans) {
     if (err) {
       console.log(err);
     } else {
@@ -33,7 +33,7 @@ router.post('/display', upload.array('image'), function (req, res, next) {
     time: req.body.date,
   };
 
-  ticket.create(newticket, function (err) {
+  tickets.create(newticket, function (err) {
     if (err) {
       console.log(err);
     } else {
