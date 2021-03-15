@@ -1,39 +1,39 @@
-<%- include('partials/header')%>
+<%- include('partials/header',{isLogin: false})%>
 
-<div class="container">
-<div style="text-align:center">	
-	
-<h2>Sign up </h2>
-</div>
-<div   style="width:30%; margin: 0 auto;">
-	<form method="POST" action="/" enctype="multipart/form-data">
-		<div class="form-group">
-            <input class="form-control" type="text" name="username" placeholder="User name">
-        </div>
-        <div class="form-group">
-           <input class="form-control" type="password" name="password" placeholder="password">
-		</div>
-		
-		<div class="form-group">
-            <input type="file" id="imagee" name="imagee" >
-		</div>
+	<div class="container">
+		<div style="text-align:center">
 
-		<div class="form-group">
-			<input class="form-contol" type="number" name="mobilenumber" placeholder="mobile">
+			<h2>Sign up </h2>
 		</div>
+		<div style="width:30%; margin: 0 auto;">
+			<form method="POST" action="/" enctype="multipart/form-data">
+				<div class="form-group">
+					<input class="form-control" type="text" name="username" placeholder="User name">
+				</div>
+				<div class="form-group">
+					<input class="form-control" type="password" name="password" placeholder="password">
+				</div>
 
-		<div class="form-group">
-			<input class="form-control" type="text" name="address" placeholder="Residential address">
-		</div>
-		
-		<div class="form-group">
-			<input class="form-control" type="email" name="email" placeholder="Email-id">
-		</div>
-		<div class="form-group">
-			<button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
-		</div>
-	</form>
-</div>
-</div>
+				<div class="form-group">
+					<input type="file" id="imagee" name="imagee">
+				</div>
 
-<%- include('partials/footer')%>
+				<div class="form-group">
+					<input class="form-contol" type="number" name="mobilenumber" placeholder="mobile">
+				</div>
+
+				<div class="form-group">
+					<input class="form-control" type="text" name="address" placeholder="Residential address">
+				</div>
+
+				<div class="form-group">
+					<input class="form-control" type="email" name="email" placeholder="Email-id">
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<%- include('partials/footer')%>

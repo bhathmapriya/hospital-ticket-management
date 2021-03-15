@@ -1,4 +1,4 @@
-<%- include('partials/header')%>
+<%- include('partials/header', {isLogin:true})%>
 	<script type="text/javascript">
 		function validateForm() {
 			if (window.loginCaptcha) {
@@ -33,7 +33,7 @@
 				<div class="form-group">
 					<input class="form-control" type="password" name="password" placeholder="password" required>
 				</div>
-				
+
 				<div id="recaptcha-login"></div>
 
 				<div class="alert alert-warning alert-dismissible hide" role="alert">
@@ -44,7 +44,7 @@
 					<button type="submit" class="btn btn-lg btn-primary btn-block">LOGIN</button>
 				</div>
 			</form>
-			
+
 		</div>
 	</div>
 	<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>

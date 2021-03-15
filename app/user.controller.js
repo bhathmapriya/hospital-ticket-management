@@ -103,6 +103,10 @@ router.get('/login', function (req, res) {
 });
 
 router.get('/', function (req, res) {
+  res.redirect('/login');
+});
+
+router.get('/signup', function (req, res) {
   res.render('signup.ejs');
 });
 
