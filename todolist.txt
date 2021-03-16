@@ -1,0 +1,13 @@
+Doctor List page
+- Title
+- Search box
+- Search doctor name
+- send doctor name in url as query param as below
+   ?doctorName=ram
+- read query param in node js
+- use query to find doctor name in node js
+    find({name: { $regex: doctorName , $options: 'i'})
+- send response to ui
+
+
+
