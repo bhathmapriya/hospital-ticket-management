@@ -1,23 +1,13 @@
 var mongoose = require('mongoose');
 
-const definition = new mongoose.Schema({
-  name: {
-    type: String,
-    //unique: true,
-    required: [true, 'Doctor name cannot be blank'],
-  },
-  department: {
-    type: String,
-  },
+var definition = new mongoose.Schema({
+  name: String,
+  department: String,
   age: Number,
   availability: Boolean,
-  availableTime: String,
-  reviews: [
-    {
-      type: String,
-      star: Number,
-    },
-  ],
+  availableFrom: String,
+  availableTo: String,
+  reviews: String,
 });
 
 module.exports = definition;

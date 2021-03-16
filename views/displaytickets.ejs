@@ -1,36 +1,44 @@
-<%- include('partials/header')%>
-<div class="container">
-<div  class="jumbotron">
-	<h1>Generated Tickets</h1>
-	<a href="/ticketgen" class="btn btn-lg btn-primary">Raise new ticket</a>
-</div>
+<%- include('partials/header',{isLogin:false})%>
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Generated Tickets</h1>
+			<a href="/ticketgen" class="btn btn-lg btn-primary">Raise new ticket</a>
+		</div>
 
-<div class="row">
+		<div class="row">
 
-<% arr.forEach(function(dis){%>
-	<div  class="thumbnail">
-	<% for (let img of dis.images){%>	
+			<% arr.forEach(function(dis){%>
+				<div class="thumbnail">
+					<% for (let img of dis.images){%>
 
-		
-		<p><img src="<%=img.url %>"  onclick="myfunction(src)" style="width: 100px;height: 80px; float: right;"></p>
-		
-	<script>
-		function myfunction(x){
-			// location.href = x;
-			document.write("<img src="+x+" style=width:auto,height:auto /0>");
-		}
-	</script>
-	<% } %>
-	<p><%= dis.clientname %></p>	
-	<p><%= dis.name %></p>	
-    <p><%=dis.desc %></p>
-    <p><%=dis.date %></p>
-	
-    </div>
-	
 
-<%});%>
-</div>
-</div>
-<%- include('partials/footer')%>
+						<p><img src="<%=img.url %>" onclick="myfunction(src)"
+								style="width: 100px;height: 80px; float: right;"></p>
 
+						<script>
+							function myfunction(x) {
+								// location.href = x;
+								document.write("<img src=" + x + " style=width:auto,height:auto /0>");
+							}
+						</script>
+						<% } %>
+							<p>
+								<%= dis.clientname %>
+							</p>
+							<p>
+								<%= dis.name %>
+							</p>
+							<p>
+								<%=dis.desc %>
+							</p>
+							<p>
+								<%=dis.date %>
+							</p>
+
+				</div>
+
+
+				<%});%>
+		</div>
+	</div>
+	<%- include('partials/footer')%>

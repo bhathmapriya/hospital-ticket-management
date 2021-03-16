@@ -1,14 +1,80 @@
 <%- include('partials/header',{isLogin:false})%>
-    <div class="container">
-        <div class="jumbotron">
-            <h1>Generated passwords</h1>
-        </div>
+    <style>
+        .doctor-card {
+            width: 50%;
+            margin: 0 auto;
+            margin-bottom: 10px;
+        }
 
+        .doctor-card .card-body {
+            padding: 10px 20px;
+        }
+
+        .card-body-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .review-card-container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 15px 0px 5px 0px;
+        }
+
+        .review-card {
+            display: flex;
+            border: 1px solid #0000004d;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin: 4px 2px;
+        }
+
+        .review-rating {
+            margin-right: 5px;
+        }
+    </style>
+    <div class="container">
         <div class="row">
 
-            <% list.forEach(function(item){%>
-                <div></div>
-                <%}%>
+            <% list.forEach(function(inf){ %>
+                <div class=" doctor-card card">
+                    <div class="card-body ">
+                        <div class="card-body-header">
+                            <h5 class="card-title">
+                                <%= inf.name %>
+                            </h5>
+                            <div>
+                                <i class="bi bi-clock"></i>
+                                <%=inf.availableFrom %> - <%=inf.availableTo%>
+                            </div>
+                        </div>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            <%=inf.department %>, Age: <%=inf.age %>
+                        </h6>
+                        <div class="review-card-container">
+                            <% inf.reviews.forEach(function(review){ %>
+
+                                <div class="review-card">
+                                    <div class="review-rating">
+                                        <i class="bi bi-star-fill"></i>
+                                        <span>
+                                            <%=review.star %>
+                                        </span>
+                                    </div>
+                                    <div class="review-title">
+                                        <%=review.type %>
+                                    </div>
+
+                                </div>
+                                <%});%>
+
+                        </div>
+                    </div>
+                </div>
+                <%});%>
+
 
         </div>
     </div>
