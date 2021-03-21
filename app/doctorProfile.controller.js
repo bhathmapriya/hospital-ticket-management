@@ -8,9 +8,9 @@ var upload = multer({ storage });
 const doctorDefinition = require('./schemas/doctorProfile.js');
 
 const doctorProfile = new mongoose.model(
-  'doctorprofile',
+  'doctorProfile',
   doctorDefinition,
-  'doctorprofile'
+  'doctorProfile'
 );
 
 router.get('/list', function (req, res) {
@@ -31,8 +31,10 @@ router.get('/list', function (req, res) {
           reviews: new Array(...JSON.parse(item.reviews)),
         };
         return obj;
+        
       });
-      // console.log(data);
+      console.log(data);
+      
       res.render('doctorList.ejs', { list: data });
     }
   });

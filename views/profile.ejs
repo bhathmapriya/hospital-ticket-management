@@ -18,7 +18,7 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default " style=" min-height: 100px;background: linear-gradient(to right,#80d4ff,#00a3cc,#006680);">
 		<div class="container-fluid">
 			<div class="navbar-header">
                 <% data.forEach(function(tic){ %>
@@ -58,6 +58,16 @@
             <label style="font-size: large;">email         :</label><p><%= inf.email %></p> 
 			        
        <% })%>
+	   <table class="table table-striped table-primary">
+			<thead>
+				<tr>
+					<th name="sno">S.no</th>
+				    <th name="date">Date</th>
+					<th name="problem">Problem</th>
+					<th name="doctor">Doctor consulted</th>
+				</tr>
+			</thead>
+	   </table>
     </div>
 
     <%- include('partials/footer')%>

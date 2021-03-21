@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<!-- <link href="/public/css/style.css" rel="stylesheet" type="text/css"> -->
+	 <link href="css/style.css" rel="stylesheet" type="text/css" /> 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>
@@ -19,7 +19,7 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default " style="min-height:100px;background: linear-gradient(to right,#80d4ff,#00a3cc,#006680);">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href=" ">Generate Ticket</a>
@@ -57,10 +57,32 @@
 
 <div class="container">
 <div style="text-align:center">	
-<h2>New Ticket </h2>
+<!-- <h2>New Ticket </h2> --!-->
 </div>
-
-<div   style="width:30%; margin: 0 auto;">
+<div class="container">
+	<div style="width:30%; margin: 0 auto;">
+		<br>
+		<br>
+	<div class="form-group">
+		<button class="btn btn-lg btn-primary btn-block">New Ticket</button>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-lg btn-primary btn-block">Existing ticket</button>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-lg btn-primary btn-block">Profile</button>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-lg btn-primary btn-block">Help</button>
+	</div>	
+	<div class="form-group">
+		<button class="btn btn-lg btn-primary btn-block">About us</button>
+	</div>
+	</div>
+</div>		
+		
+	
+	<!--
 	<form method="POST" action="/display" enctype="multipart/form-data">
 		<div class="form-group">
 			<input class="form-control" type="text" name="clientname" placeholder="Client name">
@@ -83,7 +105,8 @@
 			<button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
 		</div>
 	</form>
-<a href="/display">View Tickets</a>
+	--!-->
+<!--<a href="/display">View Tickets</a> --!-->
 </div>
 </div>
 

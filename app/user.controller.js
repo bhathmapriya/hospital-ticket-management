@@ -10,6 +10,7 @@ var session = require('express-session');
 const userSchema = require('./schemas/user');
 
 var register = new mongoose.model('register', userSchema);
+router.use(express.static(__dirname +'/public'));
 
 router.post('/', upload.array('imagee'), async (req, res) => {
   var { password, username, imagee, mobilenumber, address, email } = req.body;
