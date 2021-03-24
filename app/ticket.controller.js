@@ -30,11 +30,14 @@ router.get('/newtick/:id',async(req,res)=>{
 
 
 router.post('/newtick/:id',async(req,res)=>{
-  var requirements={
-    symptoms: req.body.symptoms,
-    date: req.body.date,
-    time: req.body.time
-  }
+ var symptoms= req.body.symptoms;
+ var date=req.body.date;
+ var time= req.body.time;
+  var requirements=new patrequire({
+   symptoms,
+   date,
+   time
+  });
 await requirements.save();
   res.redirect('');
   return requirements;
