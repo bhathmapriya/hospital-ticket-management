@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var express = require('express');
 var router = express();
-
+var moment=require('moment');
 var multer = require('multer');
 var { storage } = require('../cloudinary');
 var upload = multer({ storage });
@@ -30,13 +30,34 @@ router.get('/newtick/:id',async(req,res)=>{
 
 
 router.post('/newtick/:id',async(req,res)=>{
+  
  var symptoms= req.body.symptoms;
  var date=req.body.date;
  var time= req.body.time;
+ //console.log(time);
+ console.log(date);
+ const timee = time.split(':');
+// var year= date.getFullYear();
+//console.log(year);
+ console.log(timee);
+ /*let
+    Source = date,
+    Remove00 = Table.TransformColumns(Source, {{date, each Text.BeforeDelimiter(_, ","), type text}}),
+    StripOrdinal = Table.TransformColumns(Remove00, {{date, each Text.BeforeDelimiter(_," ") & Text.Select(_, {" ","0".."9"}), type text}}),
+    TextToDate = Table.TransformColumnTypes(StripOrdinal,{{date, type date}})
+in
+    TextToDate*/
+ const momentObj = moment(date); //creating a moment obj for demo
+momentObj.set({hours: timee[0], minutes: timee[1]});
+console.log(momentObj.format("DD/MM/YYYY hh:mm a"));
+const ondate=momentObj.format("DD/MM/YY");
+const ontime=momentObj.format("hh:mm a");
+//console.log(ondate);
+//console.log(ontime);
   var requirements=new patrequire({
    symptoms,
-   date,
-   time
+   ondate,
+   ontime
   });
 await requirements.save();
   res.redirect('');
