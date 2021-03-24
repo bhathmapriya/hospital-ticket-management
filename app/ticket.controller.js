@@ -5,16 +5,55 @@ var router = express();
 var multer = require('multer');
 var { storage } = require('../cloudinary');
 var upload = multer({ storage });
-const ticketDefinition = require('./schemas/ticket.js');
+const patientinfo = require('./schemas/user');
+const patreq=require('./schemas/requirements');
 
-const tickets = new mongoose.model('tickets', ticketDefinition);
+const patientinfoo = new mongoose.model('patientinfoo', patientinfo);
+console.log(patientinfoo);
+const patrequire= new mongoose.model('patrequire',patreq);
+
+router.get('/newtick/:id',async(req,res)=>{
+ var id=req.params.id;
+ console.log(id);
+ //var patient=await patientinfoo.findOne({username});
+ 
+ //console.log(patient);
+ patientinfoo.find({_id:id},function(err,data){
+   if(err){
+     console.log(err);
+   }
+   else{
+     res.render('newtick',{data:data});
+   }
+ });
+});
+
+
+router.post('/newtick/:id',async(req,res)=>{
+  var requirements={
+    symptoms: req.body.symptoms,
+    date: req.body.date,
+    time: req.body.time
+  }
+await requirements.save();
+  res.redirect('');
+  return requirements;
+      ////////////////////////////////////////////
+      /*to pop up list of doctors as per prefernce*/
+      /////////////////////////////////////////
+     /* res.redirect('/listofdoctors',{data:data});
+    }
+  });*/
+
+
+});
 
 router.get('/display', function (req, res) {
   if (!req.session?.user_id) {
     res.redirect('/login');
   }
 
-  tickets.find({}, function (err, ans) {
+  patientinfoo.find({}, function (err, ans) {
     if (err) {
       console.log(err);
     } else {

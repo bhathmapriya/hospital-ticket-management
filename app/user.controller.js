@@ -32,7 +32,7 @@ router.post('/', upload.array('imagee'), async (req, res) => {
 
 router.post('/login', async (req, res) => {
   var { password, username, mobilenumber, imagee, address, email } = req.body;
-  var user = await register.findOne({ username });
+  var user = await register.findOne({username});
   console.log(user);
 
   var validuser = await bcrypt.compare(password, user.password);
@@ -44,7 +44,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/ticketgen/:id', async (req, res) => {
+router.get('/ticketgen/:id', function(req, res) {
   var id = req.params.id;
   console.log(id);
   //console.log(req.session);

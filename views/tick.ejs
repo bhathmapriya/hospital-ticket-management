@@ -64,13 +64,17 @@
 		<br>
 		<br>
 	<div class="form-group">
-		<button class="btn btn-lg btn-primary btn-block">New Ticket</button>
+		<% doc.forEach(function(info){ %>
+		<button class="btn btn-lg btn-primary btn-block" onclick="location.href='/newtick/<%=info._id %>'">New Ticket</button>
+		<% }) %>
 	</div>
 	<div class="form-group">
-		<button class="btn btn-lg btn-primary btn-block">Existing ticket</button>
+		<button class="btn btn-lg btn-primary btn-block"onclick="location.href=''">Existing ticket</button>
 	</div>
 	<div class="form-group">
-		<button class="btn btn-lg btn-primary btn-block">Profile</button>
+		<% doc.forEach(function(ptid){ %>
+		<button class="btn btn-lg btn-primary btn-block" onclick="location.href='/profile/<%= ptid._id%>'">Profile</button>
+	    <% })%>
 	</div>
 	<div class="form-group">
 		<button class="btn btn-lg btn-primary btn-block">Help</button>

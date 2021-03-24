@@ -1,6 +1,21 @@
 <%- include('partials/header', {isLogin:true})%>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
 
 	<script type="text/javascript">
+
+$(".log-in").click(function(){
+	$(".signIn").addClass("active-dx");
+	$(".signUp").addClass("inactive-sx");
+	$(".signUp").removeClass("active-sx");
+	$(".signIn").removeClass("inactive-dx");
+});
+
+$(".back").click(function(){
+	$(".signUp").addClass("active-sx");
+	$(".signIn").addClass("inactive-dx");
+	$(".signIn").removeClass("active-dx");
+	$(".signUp").removeClass("inactive-sx");
+});
 		function validateForm() {
 			if (window.loginCaptcha) {
 				return true;
@@ -26,7 +41,7 @@
 			<h2>Login</h2>
 		</div>
 		<div style="width:30%; margin: 0 auto;">
-			<form method="POST" action="/login" onsubmit="return validateForm()">
+			<form method="POST" class="signIn" action="/login" onsubmit="return validateForm()">
 
 				<div class="form-group">
 					<input class="form-control" type="text" name="username" placeholder="User name" required>
@@ -42,10 +57,10 @@
 				</div>
 
 				<div class="form-group">
-					<button type="submit" class="btn btn-lg btn-primary btn-block">LOGIN</button>
+					<button type="submit" class="btn btn-lg btn-primary btn-block form-btn dx" >LOGIN</button>
 				</div>
 				<div class="form-group">
-					<button class="btn btn-lg btn-primary btn-block" onclick="location.href='/signup'">SIGNUP</button>
+					<button class="btn btn-lg btn-primary btn-block form-btn sx back" onclick="location.href='/signup'">SIGNUP</button>
 					
 				</div>
 
