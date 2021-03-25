@@ -6,12 +6,20 @@ var multer = require('multer');
 var { storage } = require('../cloudinary');
 var upload = multer({ storage });
 const doctorDefinition = require('./schemas/doctorProfile.js');
-
+const patrequire=require('./schemas/requirements');
 const doctorProfile = new mongoose.model(
   'doctorProfile',
   doctorDefinition,
   'doctorProfile'
 );
+const requires=new mongoose.model('requires',patrequire);
+
+router.get('/doctors/:id',function(req,res){
+   id:req.params.id;
+   res.redirect('doctors.ejs');
+});
+
+
 
 router.get('/list', function (req, res) {
   doctorProfile.find({}, (err, data) => {

@@ -5,11 +5,12 @@ var moment=require('moment');
 var multer = require('multer');
 var { storage } = require('../cloudinary');
 var upload = multer({ storage });
-const patientinfo = require('./schemas/user');
+//const patientinfo = require('./schemas/user');
 const patreq=require('./schemas/requirements');
 
-const patientinfoo = new mongoose.model('patientinfoo', patientinfo);
-console.log(patientinfoo);
+//const patientinfoo = new mongoose.model('patientinfoo', patientinfo,'patientinfoo');
+//console.log("information from PATIENT INFOOOO:::::");
+//console.log(patientinfoo);
 const patrequire= new mongoose.model('patrequire',patreq);
 
 router.get('/newtick/:id',async(req,res)=>{
@@ -34,22 +35,13 @@ router.post('/newtick/:id',async(req,res)=>{
  var symptoms= req.body.symptoms;
  var date=req.body.date;
  var time= req.body.time;
- //console.log(time);
- console.log(date);
+ var id=req.params.id;
+ //console.log(date);
  const timee = time.split(':');
-// var year= date.getFullYear();
-//console.log(year);
- console.log(timee);
- /*let
-    Source = date,
-    Remove00 = Table.TransformColumns(Source, {{date, each Text.BeforeDelimiter(_, ","), type text}}),
-    StripOrdinal = Table.TransformColumns(Remove00, {{date, each Text.BeforeDelimiter(_," ") & Text.Select(_, {" ","0".."9"}), type text}}),
-    TextToDate = Table.TransformColumnTypes(StripOrdinal,{{date, type date}})
-in
-    TextToDate*/
+ //console.log(timee);
  const momentObj = moment(date); //creating a moment obj for demo
 momentObj.set({hours: timee[0], minutes: timee[1]});
-console.log(momentObj.format("DD/MM/YYYY hh:mm a"));
+//console.log(momentObj.format("DD/MM/YYYY hh:mm a"));
 const ondate=momentObj.format("DD/MM/YY");
 const ontime=momentObj.format("hh:mm a");
 //console.log(ondate);
@@ -60,8 +52,9 @@ const ontime=momentObj.format("hh:mm a");
    ontime
   });
 await requirements.save();
-  res.redirect('');
+
   return requirements;
+
       ////////////////////////////////////////////
       /*to pop up list of doctors as per prefernce*/
       /////////////////////////////////////////

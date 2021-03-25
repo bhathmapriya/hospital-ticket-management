@@ -31,7 +31,7 @@ router.post('/', upload.array('imagee'), async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  var { password, username, mobilenumber, imagee, address, email } = req.body;
+  var { password, username } = req.body;
   var user = await register.findOne({username});
   console.log(user);
 
