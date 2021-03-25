@@ -6,29 +6,25 @@ var multer = require('multer');
 var { storage } = require('../cloudinary');
 var upload = multer({ storage });
 const doctorDefinition = require('./schemas/doctorProfile.js');
-const patrequire=require('./schemas/requirements');
+const patrequire = require('./schemas/requirements');
 const doctorProfile = new mongoose.model(
   'doctorProfile',
   doctorDefinition,
   'doctorProfile'
 );
-const requires=new mongoose.model('requires',patrequire);
+const requires = new mongoose.model('requires', patrequire);
 
-router.get('/doctors/:id',function(req,res){
-   id=req.params.id;
-   console.log(id);
-   patrequires.find({_id:id},function(err,data){
-    if(err){
+router.get('/doctors/:id', function (req, res) {
+  id = req.params.id;
+  console.log(id);
+  requires.find({ _id: id }, function (err, data) {
+    if (err) {
       res.send(err);
+    } else {
+      res.render('doctors.ejs', { data: data });
     }
-    else{
-      res.redirect('doctors.ejs',{data:data});
-    }
-
-   });
+  });
 });
-
-
 
 router.get('/list', function (req, res) {
   doctorProfile.find({}, (err, data) => {
@@ -48,10 +44,9 @@ router.get('/list', function (req, res) {
           reviews: new Array(...JSON.parse(item.reviews)),
         };
         return obj;
-        
       });
       console.log(data);
-      
+
       res.render('doctorList.ejs', { list: data });
     }
   });

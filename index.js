@@ -35,7 +35,7 @@ app.set('view engine', 'ejs');
 
 app.use('', ticketController);
 app.use('', userController);
-app.use('/doctor', doctorProfileController);
+app.use('', doctorProfileController);
 
 app.use(function (err, req, res, next) {
   console.error(err.stack);
