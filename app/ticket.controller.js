@@ -38,24 +38,25 @@ router.post('/newtick/:id',async(req,res)=>{
  var date=req.body.date;
  var time= req.body.time;
  var id=req.params.id;
- //console.log(date);
- const timee = time.split(':');
+ console.log("check check check");
+ console.log(req.body);
+const timee = time.split(':');
  //console.log(timee);
  const momentObj = moment(date); //creating a moment obj for demo
 momentObj.set({hours: timee[0], minutes: timee[1]});
 //console.log(momentObj.format("DD/MM/YYYY hh:mm a"));
-const ondate=momentObj.format("MM/DD/YYYY");
+const ondate=momentObj.format("DD/MM/YYYY");
 const ontime=momentObj.format("hh:mm a");
-//console.log(ondate);
+console.log(ondate);
 //console.log(ontime);
   var requirements=new patrequire({
-   symptoms,
-   ondate,
-   ontime
+    symptoms: symptoms,
+   date: momentObj.toISOString(),
+   time : time
   });
 await requirements.save();
-
-  return requirements;
+res.redirect("/doctors/"+id);
+  //return requirements;
 
       ////////////////////////////////////////////
       /*to pop up list of doctors as per prefernce*/

@@ -16,6 +16,7 @@ const requires=new mongoose.model('requires',patrequire);
 
 router.get('/doctors/:id',function(req,res){
    id=req.params.id;
+   console.log(id);
    patrequires.find({_id:id},function(err,data){
     if(err){
       res.send(err);
