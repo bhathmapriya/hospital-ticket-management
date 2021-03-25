@@ -60,7 +60,7 @@
     <form method="POST" action="/newtick/:id">
         
                 <div class="form-group">
-                    <input type="textarea" name="symptoms" placeholder="Enter symptoms" required/>
+                    <input type="text" name="symptoms" placeholder="Enter symptoms" required/>
                 </div>
                
                
@@ -123,8 +123,8 @@
             </div>
             <div class="form-group">
                 <% data.forEach(function(dis){%>
-                <button type="submit" class="btn btn-lg btn-primary btn-block" onclick="location.href='/doctors/<%= dis._id%>'" >Submit</button>
-                <% )} %>
+                <button type="submit" class="btn btn-lg btn-primary btn-block" onclick="location.href='/doctors/<%=dis._id%>'">Submit</button>
+                <% }) %>
             </div>
             </div>
             

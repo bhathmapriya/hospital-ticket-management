@@ -5,9 +5,11 @@ var moment=require('moment');
 var multer = require('multer');
 var { storage } = require('../cloudinary');
 var upload = multer({ storage });
+const userSchema = require('./schemas/user');
 //const patientinfo = require('./schemas/user');
 const patreq=require('./schemas/requirements');
 
+var register = new mongoose.model('register', userSchema);
 //const patientinfoo = new mongoose.model('patientinfoo', patientinfo,'patientinfoo');
 //console.log("information from PATIENT INFOOOO:::::");
 //console.log(patientinfoo);
@@ -19,7 +21,7 @@ router.get('/newtick/:id',async(req,res)=>{
  //var patient=await patientinfoo.findOne({username});
  
  //console.log(patient);
- patientinfoo.find({_id:id},function(err,data){
+ register.find({_id:id},function(err,data){
    if(err){
      console.log(err);
    }
@@ -42,7 +44,7 @@ router.post('/newtick/:id',async(req,res)=>{
  const momentObj = moment(date); //creating a moment obj for demo
 momentObj.set({hours: timee[0], minutes: timee[1]});
 //console.log(momentObj.format("DD/MM/YYYY hh:mm a"));
-const ondate=momentObj.format("DD/MM/YY");
+const ondate=momentObj.format("MM/DD/YYYY");
 const ontime=momentObj.format("hh:mm a");
 //console.log(ondate);
 //console.log(ontime);

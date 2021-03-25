@@ -15,8 +15,16 @@ const doctorProfile = new mongoose.model(
 const requires=new mongoose.model('requires',patrequire);
 
 router.get('/doctors/:id',function(req,res){
-   id:req.params.id;
-   res.redirect('doctors.ejs');
+   id=req.params.id;
+   patrequires.find({_id:id},function(err,data){
+    if(err){
+      res.send(err);
+    }
+    else{
+      res.redirect('doctors.ejs',{data:data});
+    }
+
+   });
 });
 
 
