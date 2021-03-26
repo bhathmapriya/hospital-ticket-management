@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var express = require('express');
 var router = express();
+var path=require('path');
 
 var multer = require('multer');
 var { storage } = require('../cloudinary');
@@ -10,7 +11,11 @@ var session = require('express-session');
 const userSchema = require('./schemas/user');
 
 var register = new mongoose.model('register', userSchema);
-router.use(express.static(__dirname +'/public'));
+router.use(express.static("public"));
+ 
+router.get('/HTMS',function(req,res){
+  res.render('doc_or_pat.ejs');
+});
 
 router.post('/', upload.array('imagee'), async (req, res) => {
   var { password, username, imagee, mobilenumber, address, email } = req.body;

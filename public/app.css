@@ -2,7 +2,7 @@
 	text-align: center;
 	padding-top: 25%;
 	font-family: lato;
-	color: white;
+	color: #ffe6e6;
 
 }
 body{
@@ -18,7 +18,7 @@ hr{
 h1{
 	font-weight: 700;
 	font-size: 5em;
-	text-shadow: 0px 5px 6px #cadb62; 
+	text-shadow: 0px 5px 6px  #ffa64d;
 }
 html{
 	height: 100%;
