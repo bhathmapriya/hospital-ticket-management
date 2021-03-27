@@ -7,7 +7,7 @@ var { storage } = require('../cloudinary');
 var upload = multer({ storage });
 
 const doctorregister = require('./schemas/doctorreg.js');
-
+console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
 const doctoraccount = new mongoose.model('doctoraccount',doctorregister);
 
 router.get('/doctor',function(req,res){

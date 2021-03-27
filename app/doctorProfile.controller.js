@@ -7,12 +7,23 @@ var { storage } = require('../cloudinary');
 var upload = multer({ storage });
 const doctorDefinition = require('./schemas/doctorProfile.js');
 const patrequire = require('./schemas/requirements');
+const doctorregister = require('./schemas/doctorreg.js');
+
+const doctoraccount = new mongoose.model('doctoraccount',doctorregister);
+
 const doctorProfile = new mongoose.model(
   'doctorProfile',
   doctorDefinition,
   'doctorProfile'
 );
 const requires = new mongoose.model('requires', patrequire);
+
+router.get('/doctor',function(req,res){
+
+  console.log("doctorr signing up page");
+  res.render('doctoesignup.ejs');
+
+});
 
 router.get('/doctors/:id', function (req, res) {
   id = req.params.id;

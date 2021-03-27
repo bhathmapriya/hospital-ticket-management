@@ -1,5 +1,26 @@
-<%- include('partials/header',{isLogin: false})%>
-<link rel="stylesheet" type="text/css" href="css/style.css" />
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	 
+        
+</head>
+
+<body>
+	<nav class="navbar fixed-top navbar-default navbar-expand-lg navbar-light bg-light" style="position: sticky;
+    top: 0px; min-height: 100px;
+    z-index: 1; background: linear-gradient(to right,#80d4ff,#00a3cc,#006680);">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<b><a class="navbar-brand" href="/">Doctor profile registration </a></b>
+			</div>
+
+		</div>
+	</nav>
 	
 	 <script src= 
 	 "https://smtpjs.com/v3/smtp.js"> 
@@ -30,41 +51,50 @@
 
 			<h2>Create your account</h2>
 		</div>
-		<div style="width:50%; margin: 0 auto;">
+		<div style="width:70%; margin: 0 auto;">
 			<form method="POST" action="/doctor" enctype="multipart/form-data" class="signUp">
 				<div class="form-group">
-                    <label>Doctor Name</label>
+                    <p>Doctor Name</p>
 					<input class="form-control " type="text" name="name" placeholder="User name" required>
-				</div>
-                
+                </div>
 				<div class="form-group">
-                    <label>Create Password</label>
+                    <p>Create Password</p>
 					<input class="form-control" type="password" name="password" placeholder="Create password" required>
 				</div>
 
 				<div class="form-group">
-                    <label>Email address</label>
+                    <p>Email address</p>
 					<input type="email" name="email" placeholder="email" required />
 				</div>
 				
                 <div class="form-group">
-                    <label>Specialized in</label>
-                    <select id="dept" name="department">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                          Dropdown button
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                          <li><a class="dropdown-item" href="#">Action</a></li>
+                          <li><a class="dropdown-item" href="#">Another action</a></li>
+                          <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                      </div>
+              <!--      <p>Specialized in</p>
+                    <select id="dept" name="department"style="width:320px">
                         <option value="ent">ENT</option>
                         <option value="cardiology">Cardiology</option>
                         <option value="Nuerology">Nuerology</option>
                         <option value="Gynecology">Gynecology</option>
                         <option value="Dental">Dental</option>
                     </select>
-				</div>
+				</div> --!-->
                 
                 <div class="form-group">
-                    <label>Age</label>
+                    <p>Age</p>
 					<input class="form-control " type="number" name="age" placeholder="Age" required>
 				</div>
                 
                 <div class="form-group">
-                    <label>Gender</label>
+                    <p>Gender</p>
                     <select id="gendertag" name="gender">
                         <option value="male">Male</option>
                         <option value="female">Female</option>
@@ -72,27 +102,27 @@
 				</div>
 
                 <div class="form-group">
-                    <label>Available Time</label>
+                    <p>Available Time</p>
 					<input class="form-control " type="time" name="availableFrom" placeholder="availabletime" required>
 				</div>
 
                 <div class="form-group">
-                    <label>Available Till</label>
+                    <p>Available Till</p>
 					<input class="form-control " type="time" name="availableTo" placeholder="availabletill" required>
 				</div>
 
                 <div class="form-group">
-                    <label>Years of Experience</label>
+                    <p>Years of Experience</p>
 					<input class="form-control " type="number" name="experience" placeholder="Years of experience" required>
 				</div>
 
 				<div class="form-group">
-                    <label>Upload Image</label>
+                    <p>Upload Image</p>
 					<input type="file" id="imagee" title="Upload image" name="docimage">
 				</div>
 
 				<div class="form-group">
-                    <label>Mobile number</label>
+                    <p>Mobile number</p>
 					<input class="form-contol" type="number" name="mobile" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="enter mobile number" required>
 				</div>
 
