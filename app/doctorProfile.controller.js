@@ -25,6 +25,46 @@ router.get('/doctor',function(req,res){
 
 });
 
+router.post('/doctor',upload.array('docimage'),async(req,res)=>{
+
+    const name=req.body.name;
+    const password=req.body.password;
+    const email=req.body.email;
+    const department=req.body.department;
+    const docimage = req.files.map((f) => ({ url: f.path, filename: f.filename }));
+    const age=req.body.age;
+    const availableFrom=req.body.availableFrom;
+    const availableTo=req.body.availableTo;
+    const experience=req.body.experience;
+   // const docimage=req.body.docimage;
+    const mobile=req.body.mobile;
+     
+    var doctorr={
+        name: name,
+        password: password,
+        email:email,
+        department:department,
+        age:age,
+        availableFrom:availableFrom,
+        availableTo:availableTo,
+        experience:experience,
+        docimage:docimage,
+        mobile:mobile
+    };
+ 
+    doctoraccount.create(doctorr,function(err){
+        if(err){
+            res.send(err);
+        }
+        else{
+            res.redirect("/permission");
+        }
+    });
+    
+});
+
+
+
 router.get('/doctors/:id', function (req, res) {
   id = req.params.id;
   console.log(id);
