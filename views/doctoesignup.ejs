@@ -1,0 +1,107 @@
+<%- include('partials/header',{isLogin: false})%>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+	
+	 <script src= 
+	 "https://smtpjs.com/v3/smtp.js"> 
+   </script> 
+   <script type="text/javascript"> 
+    function sendEmail() { 
+		
+		var em=document.getElementById("email").value;
+	//	document.getElementById("GFG").innerHTML=em;
+		var num=Math.floor(1000 + Math.random() * 9000);
+	//	console.log("hiiiiiiiiiiiiiiiiiiiii");
+      Email.send({ 
+        Host: "smtp.gmail.com", 
+        Username: "ceghtms21@gmail.com", 
+        Password: "ceghtms@2021", 
+        To: 'lotuslivingworld@@gmail.com', 
+        From: "ceghtms21@gmail.com", 
+        Subject: "HTMS account activation OTP", 
+        Body: "your OTP is"+num, 
+      }) 
+        .then(function (message) { 
+          alert("mail sent successfully") 
+        }); 
+    } 
+  </script> 
+	<div class="container">
+		<div style="text-align:center">
+
+			<h2>Create your account</h2>
+		</div>
+		<div style="width:50%; margin: 0 auto;">
+			<form method="POST" action="/doctor" enctype="multipart/form-data" class="signUp">
+				<div class="form-group">
+                    <label>Doctor Name</label>
+					<input class="form-control " type="text" name="name" placeholder="User name" required>
+				</div>
+                
+				<div class="form-group">
+                    <label>Create Password</label>
+					<input class="form-control" type="password" name="password" placeholder="Create password" required>
+				</div>
+
+				<div class="form-group">
+                    <label>Email address</label>
+					<input type="email" name="email" placeholder="email" required />
+				</div>
+				
+                <div class="form-group">
+                    <label>Specialized in</label>
+                    <select id="dept" name="department">
+                        <option value="ent">ENT</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="Nuerology">Nuerology</option>
+                        <option value="Gynecology">Gynecology</option>
+                        <option value="Dental">Dental</option>
+                    </select>
+				</div>
+                
+                <div class="form-group">
+                    <label>Age</label>
+					<input class="form-control " type="number" name="age" placeholder="Age" required>
+				</div>
+                
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select id="gendertag" name="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+				</div>
+
+                <div class="form-group">
+                    <label>Available Time</label>
+					<input class="form-control " type="time" name="availableFrom" placeholder="availabletime" required>
+				</div>
+
+                <div class="form-group">
+                    <label>Available Till</label>
+					<input class="form-control " type="time" name="availableTo" placeholder="availabletill" required>
+				</div>
+
+                <div class="form-group">
+                    <label>Years of Experience</label>
+					<input class="form-control " type="number" name="experience" placeholder="Years of experience" required>
+				</div>
+
+				<div class="form-group">
+                    <label>Upload Image</label>
+					<input type="file" id="imagee" title="Upload image" name="docimage">
+				</div>
+
+				<div class="form-group">
+                    <label>Mobile number</label>
+					<input class="form-contol" type="number" name="mobile" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="enter mobile number" required>
+				</div>
+
+				
+				<div class="form-group">
+					<button type="submit" class="btn btn-lg btn- btn-block login form-btn sx" onclick="sendEmail()">Signup</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<%- include('partials/footer')%>

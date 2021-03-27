@@ -6,9 +6,16 @@ var multer = require('multer');
 var { storage } = require('../cloudinary');
 var upload = multer({ storage });
 const userSchema = require('./schemas/user');
+const doctorDefinition = require('./schemas/doctorProfile.js');
 //const patientinfo = require('./schemas/user');
 const patreq = require('./schemas/requirements');
 
+
+const doctorProfile = new mongoose.model(
+  'doctorProfile',
+  doctorDefinition,
+  'doctorProfile'
+);
 var register = new mongoose.model('register', userSchema);
 //const patientinfoo = new mongoose.model('patientinfoo', patientinfo,'patientinfoo');
 //console.log("information from PATIENT INFOOOO:::::");
