@@ -17,6 +17,8 @@ router.get('/HTMS',function(req,res){
   res.render('doc_or_pat.ejs');
 });
 
+
+
 router.post('/', upload.array('imagee'), async (req, res) => {
   var { password, username, imagee, mobilenumber, address, email } = req.body;
   imagee = req.files.map((f) => ({ url: f.path, filename: f.filename }));

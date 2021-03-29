@@ -1,0 +1,81 @@
+<%- include('partials/header',{isLogin:false})%>
+
+
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Profiles to get approval</h1>
+      <!--<a href="/ticketgen" class="btn btn-lg btn-primary">Raise new ticket</a>--!-->
+    </div>
+
+    <div class="row toprow">
+
+      <% permission.forEach(function(dis){%>
+        <div class="thumbnail" id="<%= dis._id %>">
+          <% for (let img of dis.docimage){%>
+
+
+            <p><img src="<%=img.url %>" onclick="myfunction(src)" style="width: 200px;height: 200px; float: left;"></p>
+
+            <script>
+              function myfunction(x) {
+                // location.href = x;
+                document.write("<img src=" + x + " style=width:50px,height:60px />");
+              }
+            </script>
+            <% } %>
+
+              <p style="text-align: center;">
+                <b>Doctor name :</b>
+                <%= dis.name %>
+              </p>
+              <p style="text-align: center;">
+                <b>Specialized in :</b>
+                <%= dis.department %>
+              </p>
+              <p style="text-align: center;">
+                <b>Available From :</b>
+                <%=dis.availableFrom %>
+              </p>
+              <p style="text-align: center;">
+                <b>Available Till :</b>
+                <%=dis.availableTo %>
+              </p>
+              <p style="text-align: center;">
+                <b>Email address :</b><a>
+                  <%=dis.email %>
+                </a>
+              </p>
+
+
+              <div class=" bg-light text-right">
+                <button type="button" class="btn btn-success " onclick="adddoctor('<%= dis._id %>')">Approve</button>
+                <button type="button" class="btn btn-danger " onclick="removedoctor('<%= dis._id %>')">Reject</button>
+              </div>
+              <script>
+                function adddoctor(id) {
+                  fetch('/approve/'+id).then(res =>{
+                    if(res.body){
+                      document.getElementById(id).remove();
+
+                    }
+                  })
+                }
+                  
+
+                function removedoctor(id) {
+                  fetch('/reject/'+id).then(res => {
+                    if (res.body) {
+                      document.getElementById(id).remove();
+                    }
+                  })
+
+                }
+              </script>
+
+        </div>
+
+
+        <%});%>
+    </div>
+  </div>
+  <%- include('partials/footer')%>

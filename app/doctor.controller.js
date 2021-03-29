@@ -17,7 +17,7 @@ router.get('/doctor',function(req,res){
 
 });
 
-/*router.post('/signupdoctor',async(req,res)=>{
+router.post('/doctor',async(req,res)=>{
 
     const name=req.body.name;
     const password=req.body.password;
@@ -53,5 +53,5 @@ router.get('/doctor',function(req,res){
     });
     
 });
-*/
+
 module.exports=router;
