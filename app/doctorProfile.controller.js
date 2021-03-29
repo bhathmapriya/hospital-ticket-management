@@ -57,13 +57,24 @@ router.post('/doctor',upload.array('docimage'),async(req,res)=>{
             res.send(err);
         }
         else{
-            res.redirect("/permission");
+            res.redirect('/adminprofile');
         }
     });
     
 });
 
+router.get('/adminprofile',function(req,res){
 
+  doctoraccount.find({},function(err,data){
+
+    if(err){
+      res.send(err);
+    }else{
+      res.render('adminprofile.ejs',{permission:permission});
+    }
+  });
+
+});
 
 router.get('/doctors/:id', function (req, res) {
   id = req.params.id;
