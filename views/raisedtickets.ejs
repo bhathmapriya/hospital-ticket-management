@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-default " style=" min-height: 100px;background: linear-gradient(to right,#80d4ff,#00a3cc,#006680);">
+		<div class="container-fluid">
+			<div class="navbar-header">
+               
+
+                    <a class="navbar-brand" href="/ticketgen/<%= data[0].patientId %>"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
+			
+                
+			</div>
+			
+		</div>
+	</nav>
+
+    <div class="container">
+
+        <div class="row toprow">
+            <% data.forEach(function(det){ %>
+
+            <p style="text-align: center;">
+                <b>Symptoms         :</b>
+            <%= det.symptoms %></p> 
+            <p style="text-align: center;">
+                <b>Department         :</b>
+            <%= det.department %></p> 
+            <p style="text-align: center;">
+                <b>Date         :</b>
+            <%= det.date %></p> 
+            <p style="text-align: center;">
+                <b>Time         :</b>
+            <%= det.time %></p> 
+        <%})%>			
+            
+			        
+        </div>
+
+	</div>
+
+    <%- include('partials/footer')%>

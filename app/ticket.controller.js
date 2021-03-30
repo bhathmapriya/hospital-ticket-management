@@ -40,9 +40,10 @@ router.get('/newtick/:id', async (req, res) => {
 router.post('/newtick/:id', async (req, res) => {
   var symptoms = req.body.symptoms;
   var date = req.body.date;
+  var department= req.body.department;
   var time = req.body.time;
   var id = req.params.id;
-  console.log('check check check');
+  //console.log('check check check');
   console.log(req.body);
   const timee = time.split(':');
   //console.log(timee);
@@ -52,8 +53,10 @@ router.post('/newtick/:id', async (req, res) => {
   console.log(momentObj.toDate());
   var requirements = new patrequire({
     symptoms: symptoms,
+    department: department,
     date: momentObj.toDate(),
     time: time,
+    patientId: id
   });
   await requirements.save();
   res.redirect('/doctors/' + id);
@@ -65,6 +68,23 @@ router.post('/newtick/:id', async (req, res) => {
   /* res.redirect('/listofdoctors',{data:data});
     }
   });*/
+});
+
+router.get('/existing/:id',function(req,res){
+
+  var id=req.params.id;
+  console.log("check existing profile");
+  console.log(id);
+  patrequire.find({ patientId : id},function(err,data){
+    if(err){
+      res.send(err);
+    }
+    else{
+      console.log(data);
+      res.render('raisedtickets.ejs',{data:data});
+    }
+  });
+
 });
 
 router.get('/display', function (req, res) {
