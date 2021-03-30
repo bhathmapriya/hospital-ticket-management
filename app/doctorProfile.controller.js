@@ -6,12 +6,14 @@ var multer = require('multer');
 var { storage } = require('../cloudinary');
 var upload = multer({ storage });
 const doctorDefinition = require('./schemas/doctorProfile.js');
-const selected = require('./schemas/selecteddoctor.js');
+//approved doctors
+const doctorsSchema = require('./schemas/doctors.js');
 const patrequire = require('./schemas/requirements');
-const doctorregister = require('./schemas/doctorreg.js');
+//to get approval
+const doctorWorkitemSchema = require('./schemas/doctor.workitem.js');
 
-const doctoraccount = new mongoose.model('doctoraccount', doctorregister);
-const selecteddoctor = new mongoose.model('selecteddoctor', selected);
+const doctors = new mongoose.model('doctors', doctorsSchema,'doctors');
+const doctorWorkitem  = new mongoose.model('doctorWorkitem', doctorWorkitemSchema,'doctor.workitems');
 const doctorProfile = new mongoose.model(
   'doctorProfile',
   doctorDefinition,
@@ -53,7 +55,7 @@ router.post('/doctor', upload.array('docimage'), async (req, res) => {
     mobile: mobile
   };
 
-  doctoraccount.create(doctorr, function (err) {
+  doctorWorkitem.create(doctorr, function (err) {
     if (err) {
       res.send(err);
     }
@@ -68,7 +70,7 @@ router.post('/doctor', upload.array('docimage'), async (req, res) => {
 
 router.get('/adminprofile', function (req, res) {
 
-  doctoraccount.find({}, function (err, permission) {
+  doctorWorkitem.find({}, function (err, permission) {
 
     if (err) {
       res.send(err);
@@ -79,15 +81,16 @@ router.get('/adminprofile', function (req, res) {
 
 });
 
-router.get('/allow/:id', function (req, res) {
+router.get('/approve/:id', function (req, res) {
   var id = req.params.id;
-  doctoraccount.find({ _id: id }, function (err, approved) {
-
+  console.log("allow"+id);
+  doctorWorkitem.findOne({ _id: id }, function (err, approved) {
+    console.log(approved)
     if (err) {
       res.send(err);
     }
     else {
-      var selected = {
+      var select = {
         name: approved.name,
         password: approved.password,
         email: approved.email,
@@ -99,14 +102,14 @@ router.get('/allow/:id', function (req, res) {
         docimage: approved.docimage,
         mobile: approved.mobile
       }
-      console.log(selected);
-      selecteddoctor.create(selected, function (err) {
+      console.log(approved.mobile);
+      doctors.create(select, function (err) {
         if (err) {
           res.send(err);
         }
         else {
           console.log("Doctor profile approved");
-          doctoraccount.remove({_id:id},function(err,data){
+          doctorWorkitem.remove({_id:id},function(err,data){
             if(err){
               res.send(err);
               return;
@@ -122,13 +125,13 @@ router.get('/allow/:id', function (req, res) {
 
 router.get('/reject/:id', function (req, res) {
   var id = req.params.id;
-  doctoraccount.find({ _id: id }, function (err, datas) {
+  doctorWorkitem.find({ _id: id }, function (err, datas) {
 
     if (err) {
       res.send(err);
     }
     else {
-      doctoraccount.remove({ _id: id }, function (err, data) {
+      doctorWorkitem.remove({ _id: id }, function (err, data) {
         if (err) {
           res.send(err);
           return;

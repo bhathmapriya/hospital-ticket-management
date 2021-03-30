@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var selectedones = new mongoose.Schema({
+var doctorWorkitem = new mongoose.Schema({
   name: String,
   password:String,
   email:String,
@@ -15,4 +15,4 @@ var selectedones = new mongoose.Schema({
 
 });
 
-module.exports = selectedones;
+module.exports = doctorWorkitem;
