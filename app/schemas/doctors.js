@@ -7,8 +7,9 @@ var doctors = new mongoose.Schema({
   department: String,
   age: Number,
   gender: String,
-  availableFrom: String,
-  availableTo: String,
+  availableFrom: Date,
+  availableTo: Date,
+  availableDays:[],
   experience: Number,
   docimage:[{url:String,filename:String}],
   mobile: Number

@@ -36,8 +36,13 @@ router.post('/doctor', upload.array('docimage'), async (req, res) => {
   const department = req.body.department;
   const docimage = req.files.map((f) => ({ url: f.path, filename: f.filename }));
   const age = req.body.age;
-  const availableFrom = req.body.availableFrom;
-  const availableTo = req.body.availableTo;
+  let availableFrom = new Date();
+  let availableTo = new Date();
+
+  availableFrom.setHours(req.body.availableFrom.split(':')[0]);
+  availableFrom.setMinutes(req.body.availableFrom.split(':')[1]);
+  availableTo.setHours(req.body.availableTo.split(':')[0]);
+  availableTo.setMinutes(req.body.availableTo.split(':')[1]);
   const experience = req.body.experience;
   // const docimage=req.body.docimage;
   const mobile = req.body.mobile;
@@ -50,6 +55,7 @@ router.post('/doctor', upload.array('docimage'), async (req, res) => {
     age: age,
     availableFrom: availableFrom,
     availableTo: availableTo,
+    availableDays:req.body.availableDays.split(','),
     experience: experience,
     docimage: docimage,
     mobile: mobile
@@ -62,7 +68,8 @@ router.post('/doctor', upload.array('docimage'), async (req, res) => {
     else {
       //res.redirect should goes to doctor own profile
       //push adminprofile after admin login
-      res.redirect('/adminprofile');
+      res.send('okay');
+      // res.redirect('/adminprofile');
     }
   });
 
@@ -98,6 +105,7 @@ router.get('/approve/:id', function (req, res) {
         age: approved.age,
         availableFrom: approved.availableFrom,
         availableTo: approved.availableTo,
+        availableDays:approved.availableDays,
         experience: approved.experience,
         docimage: approved.docimage,
         mobile: approved.mobile

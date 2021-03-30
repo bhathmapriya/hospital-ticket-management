@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -6,7 +5,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	 <link href="css/style.css" rel="stylesheet" type="text/css" /> 
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>
@@ -19,7 +18,8 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-default " style="min-height:100px;background: linear-gradient(to right,#80d4ff,#00a3cc,#006680);">
+	<nav class="navbar navbar-default "
+		style="min-height:100px;background: linear-gradient(to right,#80d4ff,#00a3cc,#006680);">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href=" ">Generate Ticket</a>
@@ -28,24 +28,29 @@
 
 				<ul class="nav navbar-nav navbar-right mr-auto">
 					<% doc.forEach(function(det){ %>
-						<li><b style="color: black;"><%= det.username %></b></li>
-						<% for (let img of det.imagee){%>	
+						<li><b style="    color: white;
+							padding-right: 10px;">
+								<%= det.username %>
+							</b></li>
+						<% for (let img of det.imagee){%>
 
-							<li >
-							<img src="<%=img.url %>" style="width:46px; height: 46px; border-radius: 50%; overflow:hidden; margin-top:-6px" class="img-fluid"  onclick="myfunction(src)">
+							<li>
+								<img src="<%=img.url %>"
+									style="width:46px; height: 46px; border-radius: 50%; overflow:hidden; margin-top:-6px"
+									class="img-fluid" onclick="myfunction(src)">
 							</li>
-						<script>
-							function myfunction(x){
-								// location.href = x;
-								document.write("<img src="+x+" style=width:auto,height:auto /0>");
-							}
-						</script>
-						<% } %>
-					<li style="font-size: large;"><a   href="/profile/<%= det._id %>">Profile</a></li>
-					<% }) %>
-					<li  style="font-size: large;text-align: center;"><a href="/">Logout</a></li>
+							<script>
+								function myfunction(x) {
+									// location.href = x;
+									document.write("<img src=" + x + " style=width:auto,height:auto /0>");
+								}
+							</script>
+							<% } %>
+								<li style="font-size: large;"><a href="/profile/<%= det._id %>">Profile</a></li>
+								<% }) %>
+									<li style="font-size: large;text-align: center;"><a href="/">Logout</a></li>
 				</ul>
-				
+
 			</div>
 		</div>
 	</nav>
@@ -55,40 +60,43 @@
 
 
 
-<div class="container">
-<div style="text-align:center">	
-<!-- <h2>New Ticket </h2> --!-->
-</div>
-<div class="container">
-	<div style="width:30%; margin: 0 auto;">
-		<br>
-		<br>
-	<div class="form-group">
-		<% doc.forEach(function(info){ %>
-		<button class="btn btn-lg btn-primary btn-block" onclick="location.href='/newtick/<%=info._id %>'">New Ticket</button>
-		<% }) %>
-	</div>
-	<div class="form-group">
-		<% doc.forEach(function(det){ %>
-		<button class="btn btn-lg btn-primary btn-block"onclick="location.href='/existing/<%= det._id %>'">Existing ticket</button>
-		<% }) %>
-	</div>
-	<div class="form-group">
-		<% doc.forEach(function(ptid){ %>
-		<button class="btn btn-lg btn-primary btn-block" onclick="location.href='/profile/<%= ptid._id%>'">Profile</button>
-	    <% })%>
-	</div>
-	<div class="form-group">
-		<button class="btn btn-lg btn-primary btn-block">Help</button>
-	</div>	
-	<div class="form-group">
-		<button class="btn btn-lg btn-primary btn-block">About us</button>
-	</div>
-	</div>
-</div>		
-		
-	
-	<!--
+	<div class="container">
+		<div style="text-align:center">
+			<!-- <h2>New Ticket </h2> --!-->
+		</div>
+		<div class="container">
+			<div style="width:30%; margin: 0 auto;">
+				<br>
+				<br>
+				<div class="form-group">
+					<% doc.forEach(function(info){ %>
+						<button class="btn btn-lg btn-primary btn-block"
+							onclick="location.href='/newtick/<%=info._id %>'">New Ticket</button>
+						<% }) %>
+				</div>
+				<div class="form-group">
+					<% doc.forEach(function(det){ %>
+						<button class="btn btn-lg btn-primary btn-block"
+							onclick="location.href='/existing/<%= det._id %>'">Existing ticket</button>
+						<% }) %>
+				</div>
+				<div class="form-group">
+					<% doc.forEach(function(ptid){ %>
+						<button class="btn btn-lg btn-primary btn-block"
+							onclick="location.href='/profile/<%= ptid._id%>'">Profile</button>
+						<% })%>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-lg btn-primary btn-block">Help</button>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-lg btn-primary btn-block">About us</button>
+				</div>
+			</div>
+		</div>
+
+
+		<!--
 	<form method="POST" action="/display" enctype="multipart/form-data">
 		<div class="form-group">
 			<input class="form-control" type="text" name="clientname" placeholder="Client name">
@@ -112,8 +120,8 @@
 		</div>
 	</form>
 	--!-->
-<!--<a href="/display">View Tickets</a> --!-->
-</div>
-</div>
+		<!--<a href="/display">View Tickets</a> --!-->
+	</div>
+	</div>
 
-<%- include('partials/footer')%>
+	<%- include('partials/footer')%>

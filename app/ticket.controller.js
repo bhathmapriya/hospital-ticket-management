@@ -56,7 +56,8 @@ router.post('/newtick/:id', async (req, res) => {
     department: department,
     date: momentObj.toDate(),
     time: time,
-    patientId: id
+    patientId: id,
+    status: 'Awaiting for admin response.'
   });
   await requirements.save();
   res.redirect('/doctors/' + id);

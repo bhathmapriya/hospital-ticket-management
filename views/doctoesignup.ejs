@@ -10,6 +10,14 @@
         select {
             display: block;
         }
+
+        .avaialble-days label {
+            padding-right: 5px;
+        }
+
+        .avaialble-days span {
+            font-size: 10px;
+        }
     </style>
 
 </head>
@@ -48,6 +56,32 @@
                     alert("mail sent successfully")
                 });
         }
+
+        function signUp() {
+            const formData = new FormData();
+            formData.append('name', document.getElementById('doctor-signup').elements.namedItem('name').value);
+            formData.append('password', document.getElementById('doctor-signup').elements.namedItem('password').value);
+            formData.append('email', document.getElementById('doctor-signup').elements.namedItem('email').value);
+            formData.append('department', document.getElementById('doctor-signup').elements.namedItem('department').value);
+            formData.append('age', document.getElementById('doctor-signup').elements.namedItem('age').value);
+            formData.append('gender', document.getElementById('doctor-signup').elements.namedItem('gender').value);
+            formData.append('availableFrom', document.getElementById('doctor-signup').elements.namedItem('availableFrom').value);
+            formData.append('availableTo', document.getElementById('doctor-signup').elements.namedItem('availableTo').value);
+            formData.append('availableDays', availableDays);
+            formData.append('experience', document.getElementById('doctor-signup').elements.namedItem('experience').value);
+            formData.append('docimage', document.getElementById('doctor-signup').elements.namedItem('docimage').value);
+            formData.append('mobile', document.getElementById('doctor-signup').elements.namedItem('mobile').value);
+            fetch('/doctor', {
+                method: 'POST',
+                body:formData
+            })
+        }
+        window.availableDays = [];
+        function selectdays(day) {
+            window.availableDays.some(i => i == day) ?
+                window.availableDays.splice(window.availableDays.indexOf(day), 1) :
+                window.availableDays.push(day);
+        }
     </script>
     <div class="container">
         <div style="text-align:center">
@@ -55,7 +89,8 @@
             <h2>Create your account</h2>
         </div>
         <div style="width:70%; margin: 0 auto;">
-            <form method="POST" action="/doctor" enctype="multipart/form-data" class="signUp">
+            <!-- method="POST" action="/doctor" enctype="multipart/form-data" -->
+            <form class="signUp" id="doctor-signup">
                 <div class="form-group">
                     <p>Doctor Name</p>
                     <input class="form-control " type="text" name="name" placeholder="User name" required>
@@ -111,6 +146,41 @@
                 </div>
                 <br>
                 <div class="form-group">
+                    <p>Available days</p>
+                    <div class="avaialble-days">
+                        <label>
+                            <input type="checkbox" value="0" onclick="selectdays(0)" />
+                            <span>Sunday</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" value="1" onclick="selectdays(1)" />
+                            <span>Monday</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" value="2" onclick="selectdays(2)" />
+                            <span>Tuesday</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" value="3" onclick="selectdays(3)" />
+                            <span>Wednesday</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" value="4" onclick="selectdays(4)" />
+                            <span>Thursday</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" value="5" onclick="selectdays(5)" />
+                            <span>Friday</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" value="6" onclick="selectdays(6)" />
+                            <span>Saturday</span>
+                        </label>
+                    </div>
+                </div>
+
+                <br>
+                <div class="form-group">
                     <p>Years of Experience</p>
                     <input class="form-control " type="number" name="experience" placeholder="Years of experience"
                         required>
@@ -129,8 +199,7 @@
                 <br>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-lg btn- btn-block login form-btn sx"
-                        onclick="sendEmail()">Signup</button>
+                    <button class="btn btn-lg btn- btn-block login form-btn sx" onclick="signUp()">Signup</button>
                 </div>
             </form>
         </div>

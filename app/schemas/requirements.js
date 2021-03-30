@@ -4,6 +4,7 @@ var mongoose=require('mongoose');
     department:String,
     date : Date,
     time:String,
+    status:String,
     patientId: String
  });
 

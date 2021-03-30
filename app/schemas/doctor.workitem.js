@@ -9,6 +9,7 @@ var doctorWorkitem = new mongoose.Schema({
   gender: String,
   availableFrom: String,
   availableTo: String,
+  availableDays:[],
   experience: Number,
   docimage:[{url:String,filename:String}],
   mobile: Number
