@@ -73,7 +73,7 @@
             formData.append('mobile', document.getElementById('doctor-signup').elements.namedItem('mobile').value);
             fetch('/doctor', {
                 method: 'POST',
-                body:formData
+                body: formData
             })
         }
         window.availableDays = [];
@@ -137,12 +137,14 @@
                 <br>
                 <div class="form-group">
                     <p>Available Time</p>
-                    <input class="form-control " type="time" name="availableFrom" placeholder="availabletime" required>
+                    <input class="form-control " type="time" step="2" name="availableFrom" placeholder="availabletime"
+                        required>
                 </div>
                 <br>
                 <div class="form-group">
                     <p>Available Till</p>
-                    <input class="form-control " type="time" name="availableTo" placeholder="availabletill" required>
+                    <input class="form-control " type="time" step="2" name="availableTo" placeholder="availabletill"
+                        required>
                 </div>
                 <br>
                 <div class="form-group">

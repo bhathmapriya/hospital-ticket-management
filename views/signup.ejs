@@ -1,30 +1,29 @@
 <%- include('partials/header',{isLogin: false})%>
-<link rel="stylesheet" type="text/css" href="css/style.css" />
-	
-	 <script src= 
-	 "https://smtpjs.com/v3/smtp.js"> 
-   </script> 
-   <script type="text/javascript"> 
-    function sendEmail() { 
-		
-		var em=document.getElementById("email").value;
-	//	document.getElementById("GFG").innerHTML=em;
-		var num=Math.floor(1000 + Math.random() * 9000);
-	//	console.log("hiiiiiiiiiiiiiiiiiiiii");
-      Email.send({ 
-        Host: "smtp.gmail.com", 
-        Username: "ceghtms21@gmail.com", 
-        Password: "ceghtms@2021", 
-        To: 'lotuslivingworld@@gmail.com', 
-        From: "ceghtms21@gmail.com", 
-        Subject: "HTMS account activation OTP", 
-        Body: "your OTP is"+num, 
-      }) 
-        .then(function (message) { 
-          alert("mail sent successfully") 
-        }); 
-    } 
-  </script> 
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+	<script src="https://smtpjs.com/v3/smtp.js">
+	</script>
+	<script type="text/javascript">
+		function sendEmail() {
+
+			var em = document.getElementById("email").value;
+			//	document.getElementById("GFG").innerHTML=em;
+			var num = Math.floor(1000 + Math.random() * 9000);
+			//	console.log("hiiiiiiiiiiiiiiiiiiiii");
+			Email.send({
+				Host: "smtp.gmail.com",
+				Username: "ceghtms21@gmail.com",
+				Password: "ceghtms@2021",
+				To: 'lotuslivingworld@@gmail.com',
+				From: "ceghtms21@gmail.com",
+				Subject: "HTMS account activation OTP",
+				Body: "your OTP is" + num,
+			})
+				.then(function (message) {
+					alert("mail sent successfully")
+				});
+		}
+	</script>
 	<div class="container">
 		<div style="text-align:center">
 
@@ -43,13 +42,14 @@
 				<div class="form-group">
 					<input type="password" name="verifypassword" placeholder="Verify Password" required />
 				</div>
-				
+
 				<div class="form-group">
 					<input type="file" id="imagee" title="Upload image" name="imagee">
 				</div>
 
 				<div class="form-group">
-					<input class="form-contol" type="number" name="mobilenumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="mobile" required>
+					<input class="form-contol" type="number" name="mobilenumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+						placeholder="mobile" required>
 				</div>
 
 				<div class="form-group">
@@ -57,11 +57,13 @@
 				</div>
 
 				<div class="form-group">
-					<input class="form-control w100" id="email" type="email" name="email"  placeholder="enter Email-id" required autocomplete="off">
+					<input class="form-control w100" id="email" type="email" name="email" placeholder="enter Email-id"
+						required autocomplete="off">
 				</div>
-				
+
 				<div class="form-group">
-					<button  class="btn btn-lg btn-primary btn-block login form-btn sx" onclick="sendEmail()">Login</button>
+					<button class="btn btn-lg btn-primary btn-block login form-btn sx"
+						onclick="sendEmail()">Signup</button>
 				</div>
 			</form>
 		</div>

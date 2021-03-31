@@ -6,21 +6,39 @@ var multer = require('multer');
 var { storage } = require('../cloudinary');
 var upload = multer({ storage });
 const userSchema = require('./schemas/user');
-const doctorDefinition = require('./schemas/doctorProfile.js');
+const doctorDefinition = require('./schemas/doctors.js');
 //const patientinfo = require('./schemas/user');
 const patreq = require('./schemas/requirements');
 
-
-const doctorProfile = new mongoose.model(
-  'doctorProfile',
-  doctorDefinition,
-  'doctorProfile'
-);
+const doctorsModal = new mongoose.model('doctors', doctorDefinition, 'doctors');
 var register = new mongoose.model('register', userSchema);
 //const patientinfoo = new mongoose.model('patientinfoo', patientinfo,'patientinfoo');
 //console.log("information from PATIENT INFOOOO:::::");
 //console.log(patientinfoo);
 const patrequire = new mongoose.model('patrequire', patreq);
+
+router.get('/searchDoctors', function (req, res, next) {
+  const filter = {
+    department: req.query.department,
+    availableDays: {
+      $in: [new Date(req.query.date).getDay().toString()],
+    },
+    availableFromHour: { $gte: parseInt(req.query.time.split(':')[0]) },
+    availableToHour: { $gte: parseInt(req.query.time.split(':')[0]) },
+  };
+  console.log(filter);
+  doctorsModal.find(filter, function (err, data) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    data = data.filter(
+      (doc) =>
+        doc.availableFromMinutes >= parseInt(req.query.time.split(':')[1])
+    );
+    res.json(data);
+  });
+});
 
 router.get('/newtick/:id', async (req, res) => {
   var id = req.params.id;
@@ -32,7 +50,7 @@ router.get('/newtick/:id', async (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.render('newtick', { data: data });
+      res.render('newtick', { _id: id });
     }
   });
 });
@@ -40,7 +58,7 @@ router.get('/newtick/:id', async (req, res) => {
 router.post('/newtick/:id', async (req, res) => {
   var symptoms = req.body.symptoms;
   var date = req.body.date;
-  var department= req.body.department;
+  var department = req.body.department;
   var time = req.body.time;
   var id = req.params.id;
   //console.log('check check check');
@@ -57,7 +75,9 @@ router.post('/newtick/:id', async (req, res) => {
     date: momentObj.toDate(),
     time: time,
     patientId: id,
-    status: 'Awaiting for admin response.'
+    status: 'Awaiting',
+    statusMessage: 'Awaiting for doctors response',
+    doctorId: req.body.doctorId,
   });
   await requirements.save();
   res.redirect('/doctors/' + id);
@@ -71,21 +91,18 @@ router.post('/newtick/:id', async (req, res) => {
   });*/
 });
 
-router.get('/existing/:id',function(req,res){
-
-  var id=req.params.id;
-  console.log("check existing profile");
+router.get('/existing/:id', function (req, res) {
+  var id = req.params.id;
+  console.log('check existing profile');
   console.log(id);
-  patrequire.find({ patientId : id},function(err,data){
-    if(err){
+  patrequire.find({ patientId: id }, function (err, data) {
+    if (err) {
       res.send(err);
-    }
-    else{
+    } else {
       console.log(data);
-      res.render('raisedtickets.ejs',{data:data});
+      res.render('raisedtickets.ejs', { data: data });
     }
   });
-
 });
 
 router.get('/display', function (req, res) {

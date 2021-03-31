@@ -11,6 +11,25 @@
     select {
       display: block;
     }
+
+    .navbar a {
+      color: white !important;
+    }
+
+    .doctor-list-container {
+      display: flex;
+      margin-top: 20px;
+    }
+
+    .doc-card {
+      margin-right: 20px;
+      padding: 20px;
+      box-shadow: 1px 1px 7px 0px #00000038;
+    }
+
+    .doc-card label {
+      font-size: 14px;
+    }
   </style>
 </head>
 
@@ -21,6 +40,9 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <b><a class="navbar-brand" href="/">Hospital Ticket Manager </a></b>
+        <a class="navbar-brand" href="/ticketgen/<%=_id %>"><span class="glyphicon glyphicon-chevron-left"
+            aria-hidden="true"></span></a>
+
       </div>
 
     </div>
@@ -34,13 +56,46 @@
     $(function () {
       $("#datepicker").datepicker();
     });
+    function searchDoctors() {
+      const formElements = document.getElementById('form').elements
+      const params = `department=${formElements.namedItem('department').value}&date=${formElements.namedItem('date').value}&time=${formElements.namedItem('time').value}`
+      fetch('/searchDoctors?' + params, {
+        method: 'GET',
+      }).then((data) => {
+        return data.json();
+      }).then(data => {
+        const doctorListElement = document.getElementById('doctor-list');
+        if (data.length > 0) {
+          var newElement = document.createElement('div');
+          newElement.classList.add('doctor-list-container');
+          newElement.innerHTML = data.map(doctor => {
+            let htmlValue = `<div class='doc-card'>
+              <div><label>Name: </label> ${doctor.name}</div>
+              <div><label>Department: </label> ${doctor.department}</div>
+              <div><label>Experience: </label> ${doctor.experience}</div>
+              <div><label>Email: </label> ${doctor.email}</div>
+              <button class="btn btn-default btn-md btn-primary">Book Appointment</button>
+              </div>`;
+            return htmlValue;
+          }).join('');
+          doctorListElement.appendChild(newElement);
+        } else {
+          var newElement = document.createElement('div');
+          newElement.innerHTML = "Doctor isn't avaiable for your search criteria !";
+          doctorListElement.appendChild(newElement);
+        }
+      })
+    }
   </script>
   <div class="container">
-    <div style="width:40%; margin: 0 auto;">
+    <div style="width:100%; margin: 0 auto;">
       <div id="box" style="padding: 10px 25px;
       box-shadow: 2px 2px 9px #0000002e;">
-        <h2 style="text-align: center;">Raise a ticket</h2>
-        <form method="POST" action="/newtick/<%= data[0]._id%>" >
+        <h3 style="text-align: center; margin-top:0px; margin-bottom: 25px;">Raise a ticket</h3>
+
+        <form id="form" style="display: flex;
+          align-items: center;
+          justify-content: space-evenly;">
           <div class="form-group">
             <p>Symptoms</p>
             <input type="text" name="symptoms" placeholder="Enter symptoms" required />
@@ -64,16 +119,19 @@
             <p>Date: <input type="date" id="datepicker" name="date" required></p>
           </div>
           <div class="form-group">
-            <p>Time:<input type="time" id="appt" name="time" required /></p>
+            <p>Time:<input type="time" id="appt" name="time" step="2" required /></p>
           </div>
           <div class="form-group">
-            <% data.forEach(function(dis){%>
-              <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
-              <% }) %>
+
+            <button type="button" onclick="searchDoctors()" class="btn btn-lg btn-primary btn-block">Search</button>
+
           </div>
       </div>
-      
+
     </div>
     </form>
+    <div id="doctor-list">
+
+    </div>
   </div>
   <%- include('partials/footer') %>

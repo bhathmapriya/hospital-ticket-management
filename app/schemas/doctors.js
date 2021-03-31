@@ -2,18 +2,19 @@ var mongoose = require('mongoose');
 
 var doctors = new mongoose.Schema({
   name: String,
-  password:String,
-  email:String,
+  password: String,
+  email: String,
   department: String,
   age: Number,
   gender: String,
-  availableFrom: Date,
-  availableTo: Date,
-  availableDays:[],
+  availableFromHour: Number,
+  availableFromMinutes: Number,
+  availableToHour: Number,
+  availableToMinutes: Number,
+  availableDays: [],
   experience: Number,
-  docimage:[{url:String,filename:String}],
-  mobile: Number
-
+  docimage: [{ url: String, filename: String }],
+  mobile: Number,
 });
 
 module.exports = doctors;
