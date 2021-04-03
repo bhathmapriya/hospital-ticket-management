@@ -53,24 +53,25 @@
                 Body: "your OTP is" + num,
             })
                 .then(function (message) {
-                    alert("mail sent successfully")
+                    //alert("mail sent successfully")
                 });
         }
 
         function signUp() {
             const formData = new FormData();
-            formData.append('name', document.getElementById('doctor-signup').elements.namedItem('name').value);
-            formData.append('password', document.getElementById('doctor-signup').elements.namedItem('password').value);
-            formData.append('email', document.getElementById('doctor-signup').elements.namedItem('email').value);
-            formData.append('department', document.getElementById('doctor-signup').elements.namedItem('department').value);
-            formData.append('age', document.getElementById('doctor-signup').elements.namedItem('age').value);
-            formData.append('gender', document.getElementById('doctor-signup').elements.namedItem('gender').value);
-            formData.append('availableFrom', document.getElementById('doctor-signup').elements.namedItem('availableFrom').value);
-            formData.append('availableTo', document.getElementById('doctor-signup').elements.namedItem('availableTo').value);
+            const signupForm = document.getElementById('doctor-signup').elements;
+            formData.append('name', signupForm.namedItem('name').value);
+            formData.append('password', signupForm.namedItem('password').value);
+            formData.append('email', signupForm.namedItem('email').value);
+            formData.append('department', signupForm.namedItem('department').value);
+            formData.append('age', signupForm.namedItem('age').value);
+            formData.append('gender', signupForm.namedItem('gender').value);
+            formData.append('availableFrom', signupForm.namedItem('availableFrom').value);
+            formData.append('availableTo', signupForm.namedItem('availableTo').value);
             formData.append('availableDays', availableDays);
-            formData.append('experience', document.getElementById('doctor-signup').elements.namedItem('experience').value);
-            formData.append('docimage', document.getElementById('doctor-signup').elements.namedItem('docimage').value);
-            formData.append('mobile', document.getElementById('doctor-signup').elements.namedItem('mobile').value);
+            formData.append('experience', signupForm.namedItem('experience').value);
+            formData.append('docimage', signupForm.namedItem('docimage').files);
+            formData.append('mobile', signupForm.namedItem('mobile').value);
             fetch('/doctor', {
                 method: 'POST',
                 body: formData
@@ -90,7 +91,7 @@
         </div>
         <div style="width:70%; margin: 0 auto;">
             <!-- method="POST" action="/doctor" enctype="multipart/form-data" -->
-            <form class="signUp" id="doctor-signup">
+            <form class="signUp" id="doctor-signup" enctype="multipart/form-data" >
                 <div class="form-group">
                     <p>Doctor Name</p>
                     <input class="form-control " type="text" name="name" placeholder="User name" required>
@@ -201,7 +202,7 @@
                 <br>
 
                 <div class="form-group">
-                    <button class="btn btn-lg btn- btn-block login form-btn sx" onclick="signUp()">Signup</button>
+                    <button class="btn btn-lg btn- btn-block login form-btn sx" type="submit" onclick="signUp()">Signup</button>
                 </div>
             </form>
         </div>
