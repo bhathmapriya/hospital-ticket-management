@@ -1,0 +1,36 @@
+body{
+    
+    background: linear-gradient(217deg, rgba(125,0,0,.8), rgba(255,0,200,0) 70.71%),
+            linear-gradient(127deg, rgba(0,2,0,.8), rgba(0,255,0,0) 70.71%),
+            linear-gradient(336deg, rgba(0,0,200,.8), rgba(0,0,255,0) 70.71%);
+}
+#text h2{
+    font-weight: 100;
+    font-size: 2rem;
+}
+span{
+    color: white;
+}
+@media(max-width: 1200px){
+    #text h1{
+        font-weight: 100;
+        font-size: 3rem;
+    }
+}
+#lead{
+    color: black;
+    font-weight: 100;
+    font-size: 1.3rem;
+    font-family: 'Lora', serif;
+    margin-left: 30px;
+}
+#heading{
+    font-family: 'Lora', serif;
+    margin-left: 30px;
+    color: black;
+}
+#lab{
+    color: white;
+    font-weight: 100;
+    font-size: 1.8rem;
+}

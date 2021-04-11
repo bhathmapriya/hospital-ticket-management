@@ -138,4 +138,12 @@ router.post('/display', upload.array('image'), function (req, res, next) {
   });
 });
 
+router.get('/help',function(req,res){
+    res.render('help.ejs');
+});
+
+router.get('/aboutus',function(req,res){
+  res.render('about.ejs');
+});
+
 module.exports = router;
