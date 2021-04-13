@@ -118,6 +118,8 @@ router.get('/signup', function (req, res) {
   res.render('signup.ejs');
 });
 
+
+
 async function validateSession(username, password) {
   var user = await user.findOne({ username });
   return await bcrypt.compare(password, user.password);

@@ -33,6 +33,7 @@ router.get('/doctor', function (req, res) {
 router.post('/doctor', upload.array('docimage'), async (req, res) => {
   const name = req.body.name;
   const password = req.body.password;
+  var hash = await bcrypt.hash(password, 12);
   const email = req.body.email;
   const department = req.body.department;
   const docimage = req.files.map((f) => ({
@@ -46,7 +47,7 @@ router.post('/doctor', upload.array('docimage'), async (req, res) => {
 
   var doctorr = {
     name: name,
-    password: password,
+    password: hash,
     email: email,
     department: department,
     age: age,
@@ -71,6 +72,29 @@ router.post('/doctor', upload.array('docimage'), async (req, res) => {
     }
   });
 });
+
+
+router.get('/doctorlogin',function(req,res){
+  
+  res.render('doctorlogin.ejs');
+});
+
+router.post('/doctorlogin',async(req,res)=>{
+
+  var { password, username } = req.body;
+  var user = await doctors.findOne({username});
+  console.log(user);
+
+  var validuser = await bcrypt.compare(password, user.password);
+  if (validuser) {
+    req.session.user_id = user._id;
+    res.redirect('/doctorprofile/' + user._id);
+  } else {
+    res.redirect('/doctorlogin');
+  }
+});
+
+
 
 router.get('/adminprofile', function (req, res) {
   doctorWorkitem.find({}, function (err, permission) {
