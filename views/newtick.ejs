@@ -56,6 +56,11 @@
     $(function () {
       $("#datepicker").datepicker();
     });
+    function bookappointment(doctor,patient){
+      fetch('/bookappointment'{
+        method:'POST', body
+      })
+    }
     function searchDoctors() {
       const formElements = document.getElementById('form').elements
       const params = `department=${formElements.namedItem('department').value}&date=${formElements.namedItem('date').value}&time=${formElements.namedItem('time').value}`
@@ -74,7 +79,7 @@
               <div><label>Department: </label> ${doctor.department}</div>
               <div><label>Experience: </label> ${doctor.experience}</div>
               <div><label>Email: </label> ${doctor.email}</div>
-              <button class="btn btn-default btn-md btn-primary" onclick="location.href='/'">Book Appointment</button>
+              <button class="btn btn-default btn-md btn-primary" onclick="bookappointment(${doctor._id},${_id})">Book Appointment</button>
               </div>`;
             return htmlValue;
           }).join('');
