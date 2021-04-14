@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var express = require('express');
+var bcrypt= require('bcrypt');
 var router = express();
 
 var multer = require('multer');
@@ -81,8 +82,8 @@ router.get('/doctorlogin',function(req,res){
 
 router.post('/doctorlogin',async(req,res)=>{
 
-  var { password, username } = req.body;
-  var user = await doctors.findOne({username});
+  var { password, name } = req.body;
+  var user = await doctors.findOne({name});
   console.log(user);
 
   var validuser = await bcrypt.compare(password, user.password);

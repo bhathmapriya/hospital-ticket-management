@@ -17,6 +17,9 @@ var register = new mongoose.model('register', userSchema);
 //console.log(patientinfoo);
 const patrequire = new mongoose.model('patrequire', patreq);
 
+router.get('/bookappointment',funtion(req,res){
+  
+});
 router.get('/searchDoctors', function (req, res, next) {
   const filter = {
     department: req.query.department,
