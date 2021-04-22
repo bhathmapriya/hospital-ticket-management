@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html> -->
 <html>
 
 <head>
@@ -30,6 +30,16 @@
     .doc-card label {
       font-size: 14px;
     }
+
+    .success-label {
+      color: green;
+      width: 50%;
+      margin: 0 auto;
+      margin-top: 100px;
+      padding: 10px;
+      border: 1px solid green;
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -52,47 +62,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-    $(function () {
-      $("#datepicker").datepicker();
-    });
-    function bookappointment(doctor,patient){
-      fetch('/bookappointment'{
-        method:'POST', body
-      })
-    }
-    function searchDoctors() {
-      const formElements = document.getElementById('form').elements
-      const params = `department=${formElements.namedItem('department').value}&date=${formElements.namedItem('date').value}&time=${formElements.namedItem('time').value}`
-      fetch('/searchDoctors?' + params, {
-        method: 'GET',
-      }).then((data) => {
-        return data.json();
-      }).then(data => {
-        const doctorListElement = document.getElementById('doctor-list');
-        if (data.length > 0) {
-          var newElement = document.createElement('div');
-          newElement.classList.add('doctor-list-container');
-          newElement.innerHTML = data.map(doctor => {
-            let htmlValue = `<div class='doc-card'>
-              <div><label>Name: </label> ${doctor.name}</div>
-              <div><label>Department: </label> ${doctor.department}</div>
-              <div><label>Experience: </label> ${doctor.experience}</div>
-              <div><label>Email: </label> ${doctor.email}</div>
-              <button class="btn btn-default btn-md btn-primary" onclick="bookappointment(${doctor._id},${_id})">Book Appointment</button>
-              </div>`;
-            return htmlValue;
-          }).join('');
-          doctorListElement.appendChild(newElement);
-        } else {
-          var newElement = document.createElement('div');
-          newElement.innerHTML = "Doctor isn't avaiable for your search criteria !";
-          doctorListElement.appendChild(newElement);
-        }
-      })
-    }
-  </script>
-  <div class="container">
+
+  <div class="container" id="ticket-container">
     <div style="width:100%; margin: 0 auto;">
       <div id="box" style="padding: 10px 25px;
       box-shadow: 2px 2px 9px #0000002e;">
@@ -139,4 +110,73 @@
 
     </div>
   </div>
+
+  <script>
+    $(function () {
+      $("#datepicker").datepicker();
+    });
+    function bookappointment(doctorId, patientId) {
+      const formElements = document.getElementById('form').elements;
+      const body = {
+        department: formElements.namedItem('department').value,
+        date: formElements.namedItem('date').value,
+        time: formElements.namedItem('time').value,
+        symptoms: formElements.namedItem('symptoms').value,
+        patientId: patientId,
+        doctorId: doctorId
+      }
+      fetch('/newtick/' + patientId, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(body)
+      }).then((data) => {
+        return data.json();
+      }).then(data => {
+        document.getElementById('doctor-list-container').remove();
+        var newElement = document.createElement('div');
+        newElement.innerHTML = `<div class="success-label"> Booked appointment. Awaiting for doctors approval. </div>`;
+        document.getElementById('ticket-container').appendChild(newElement);
+      })
+    }
+    function searchDoctors() {
+      const formElements = document.getElementById('form').elements
+      const params = `department=${formElements.namedItem('department').value}&date=${formElements.namedItem('date').value}&time=${formElements.namedItem('time').value}`
+      fetch('/searchDoctors?' + params, {
+        method: 'GET',
+      }).then((data) => {
+        return data.json();
+      }).then(data => {
+        const doctorListElement = document.getElementById('doctor-list');
+        doctorListElement.setAttribute('class', 'doctor-remove-item');
+        if (data.length > 0) {
+          removeElements();
+          var newElement = document.createElement('div');
+          newElement.setAttribute('id', 'doctor-list-container');
+          newElement.classList.add('doctor-list-container');
+          newElement.innerHTML = data.map(doctor => {
+            let htmlValue = `<div class='doc-card'>
+              <div><label>Name: </label> ${doctor.name}</div>
+              <div><label>Department: </label> ${doctor.department}</div>
+              <div><label>Experience: </label> ${doctor.experience}</div>
+              <div><label>Email: </label> ${doctor.email}</div>
+              <button type="button" class="btn btn-default btn-md btn-primary" onclick="bookappointment('${doctor._id}','<%=_id %>')">Book Appointment</button>
+              </div>`;
+            return htmlValue;
+          }).join('');
+          doctorListElement.appendChild(newElement);
+        } else {
+          var newElement = document.createElement('div');
+          newElement.setAttribute('class', 'doctor-remove-item');
+          newElement.innerHTML = "Doctor isn't avaiable for your search criteria !";
+          doctorListElement.appendChild(newElement);
+        }
+      })
+    }
+
+    function removeElements() {
+      [...document.getElementsByClassName('doctor-remove-item')][0].remove();
+    }
+  </script>
   <%- include('partials/footer') %>

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var express = require('express');
-var bcrypt= require('bcrypt');
+var bcrypt = require('bcrypt');
 var router = express();
 
 var multer = require('multer');
@@ -9,7 +9,7 @@ var upload = multer({ storage });
 const doctorDefinition = require('./schemas/doctorProfile.js');
 //approved doctors
 const doctorsSchema = require('./schemas/doctors.js');
-const patrequire = require('./schemas/requirements');
+const appointments = require('./schemas/appointments');
 //to get approval
 const doctorWorkitemSchema = require('./schemas/doctor.workitem.js');
 
@@ -24,7 +24,11 @@ const doctorProfile = new mongoose.model(
   doctorDefinition,
   'doctorProfile'
 );
-const requires = new mongoose.model('requires', patrequire);
+const appointmentsModel = new mongoose.model(
+  'appointments',
+  appointments,
+  'appointments'
+);
 
 router.get('/doctor', function (req, res) {
   console.log('doctorr signing up page');
@@ -74,16 +78,13 @@ router.post('/doctor', upload.array('docimage'), async (req, res) => {
   });
 });
 
-
-router.get('/doctorlogin',function(req,res){
-  
+router.get('/doctorlogin', function (req, res) {
   res.render('doctorlogin.ejs');
 });
 
-router.post('/doctorlogin',async(req,res)=>{
-
+router.post('/doctorlogin', async (req, res) => {
   var { password, name } = req.body;
-  var user = await doctors.findOne({name});
+  var user = await doctors.findOne({ name });
   console.log(user);
 
   var validuser = await bcrypt.compare(password, user.password);
@@ -94,8 +95,6 @@ router.post('/doctorlogin',async(req,res)=>{
     res.redirect('/doctorlogin');
   }
 });
-
-
 
 router.get('/adminprofile', function (req, res) {
   doctorWorkitem.find({}, function (err, permission) {
@@ -171,7 +170,7 @@ router.get('/reject/:id', function (req, res) {
 router.get('/doctors/:id', function (req, res) {
   id = req.params.id;
   console.log(id);
-  requires.find({ _id: id }, function (err, data) {
+  appointmentsModel.find({ _id: id }, function (err, data) {
     if (err) {
       res.send(err);
     } else {

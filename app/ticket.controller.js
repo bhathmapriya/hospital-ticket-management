@@ -8,18 +8,19 @@ var upload = multer({ storage });
 const userSchema = require('./schemas/user');
 const doctorDefinition = require('./schemas/doctors.js');
 //const patientinfo = require('./schemas/user');
-const patreq = require('./schemas/requirements');
+const appointments = require('./schemas/appointments');
 
 const doctorsModal = new mongoose.model('doctors', doctorDefinition, 'doctors');
 var register = new mongoose.model('register', userSchema);
 //const patientinfoo = new mongoose.model('patientinfoo', patientinfo,'patientinfoo');
 //console.log("information from PATIENT INFOOOO:::::");
 //console.log(patientinfoo);
-const patrequire = new mongoose.model('patrequire', patreq);
+const appointmentsModel = new mongoose.model(
+  'appointments',
+  appointments,
+  'appointments'
+);
 
-router.get('/bookappointment',funtion(req,res){
-  
-});
 router.get('/searchDoctors', function (req, res, next) {
   const filter = {
     department: req.query.department,
@@ -37,7 +38,7 @@ router.get('/searchDoctors', function (req, res, next) {
     }
     data = data.filter(
       (doc) =>
-        doc.availableFromMinutes >= parseInt(req.query.time.split(':')[1])
+        doc.availableFromMinutes <= parseInt(req.query.time.split(':')[1])
     );
     res.json(data);
   });
@@ -59,46 +60,38 @@ router.get('/newtick/:id', async (req, res) => {
 });
 
 router.post('/newtick/:id', async (req, res) => {
-  var symptoms = req.body.symptoms;
-  var date = req.body.date;
-  var department = req.body.department;
   var time = req.body.time;
   var id = req.params.id;
-  //console.log('check check check');
-  console.log(req.body);
+  console.log('New appointment', req.body);
   const timee = time.split(':');
-  //console.log(timee);
-  const momentObj = moment(date); //creating a moment obj for demo
+  const momentObj = moment(req.body.date); //creating a moment obj for demo
   momentObj.set({ hours: timee[0], minutes: timee[1] });
-  //console.log(momentObj.format("DD/MM/YYYY hh:mm a"));
-  console.log(momentObj.toDate());
-  var requirements = new patrequire({
-    symptoms: symptoms,
-    department: department,
+
+  var appointments = new appointmentsModel({
+    symptoms: req.body.symptoms,
+    department: req.body.department,
     date: momentObj.toDate(),
-    time: time,
+    visitHour: req.body.time.split(':')[0],
+    visitMinutes: req.body.time.split(':')[1],
     patientId: id,
     status: 'Awaiting',
     statusMessage: 'Awaiting for doctors response',
     doctorId: req.body.doctorId,
   });
-  await requirements.save();
-  res.redirect('/doctors/' + id);
-  //return requirements;
-
-  ////////////////////////////////////////////
-  /*to pop up list of doctors as per prefernce*/
-  /////////////////////////////////////////
-  /* res.redirect('/listofdoctors',{data:data});
+  appointments.save((err) => {
+    if (err) {
+      res.json({ errorMsg: "Couldn't save. Something went wrong." });
+      return;
     }
-  });*/
+    res.json({ success: true });
+  });
 });
 
 router.get('/existing/:id', function (req, res) {
   var id = req.params.id;
   console.log('check existing profile');
   console.log(id);
-  patrequire.find({ patientId: id }, function (err, data) {
+  appointmentsModel.find({ patientId: id }, function (err, data) {
     if (err) {
       res.send(err);
     } else {
@@ -141,11 +134,11 @@ router.post('/display', upload.array('image'), function (req, res, next) {
   });
 });
 
-router.get('/help',function(req,res){
-    res.render('help.ejs');
+router.get('/help', function (req, res) {
+  res.render('help.ejs');
 });
 
-router.get('/aboutus',function(req,res){
+router.get('/aboutus', function (req, res) {
   res.render('about.ejs');
 });
 

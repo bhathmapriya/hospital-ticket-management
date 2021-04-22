@@ -15,11 +15,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-        <style>
-            .toprow{
-                margin-left: 0px;
-            }
-        </style>
+    <style>
+        .toprow {
+            margin-left: 0px;
+        }
+
+        .ticket-card {
+            box-shadow: 0px 1px 5px 1px #00000029;
+            padding: 20px 25px;
+        }
+    </style>
 </head>
 
 <body>
@@ -32,7 +37,7 @@
                 <a class="navbar-brand" href="/ticketgen/<%= data[0].patientId %>"><span
                         class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
 
-                       
+
 
             </div>
 
@@ -43,7 +48,7 @@
         <h4>Raised Tickets</h4>
 
         <% data.forEach(function(det){ %>
-            <div class="row toprow">
+            <div class="row toprow ticket-card">
                 <div>
                     <b>Symptoms :</b>
                     <%= det.symptoms %>
@@ -58,13 +63,16 @@
                 </div>
                 <div>
                     <b>Time :</b>
-                    <%= det.time %>
+                    <%= det.visitHour %> : <%= det.visitMinutes %>
                 </div>
                 <div>
                     <b>Status :</b>
                     <%= det.status %>
                 </div>
-                <hr>
+                <div>
+                    <b>Status Message :</b>
+                    <%= det.statusMessage %>
+                </div>
             </div>
             <%})%>
 
