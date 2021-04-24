@@ -96,6 +96,19 @@ router.post('/doctorlogin', async (req, res) => {
   }
 });
 
+router.get('/doctorprofile/:id',function(req,res){
+  var id= req.params.id;
+  doctors.find({_id:id},function(err,data){
+
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.render('doctorpage.ejs');
+    }
+  });
+});
+
 router.get('/adminprofile', function (req, res) {
   doctorWorkitem.find({}, function (err, permission) {
     if (err) {
