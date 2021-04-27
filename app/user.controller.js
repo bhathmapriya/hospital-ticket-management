@@ -122,6 +122,7 @@ router.get('/edit/:id',async(req,res)=>{
 
 router.put('/profile/:id', async(req,res)=>{
  // res.send("IT WORKED");
+ 
 const {id}=req.params;
 //const {idd}=id;
   register.findByIdAndUpdate(id,{username:req.body.username, address:req.body.address, mobilenumber:req.body.mobilenumber},{new:true},

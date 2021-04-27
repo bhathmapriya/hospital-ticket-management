@@ -13,6 +13,7 @@ const appointments = require('./schemas/appointments');
 //to get approval
 const doctorWorkitemSchema = require('./schemas/doctor.workitem.js');
 
+
 const doctors = new mongoose.model('doctors', doctorsSchema, 'doctors');
 const doctorWorkitem = new mongoose.model(
   'doctorWorkitem',
@@ -29,6 +30,8 @@ const appointmentsModel = new mongoose.model(
   appointments,
   'appointments'
 );
+ 
+
 
 router.get('/doctor', function (req, res) {
   console.log('doctorr signing up page');
@@ -104,7 +107,17 @@ router.get('/doctorprofile/:id',function(req,res){
       console.log(err);
     }
     else{
-      res.render('doctorpage.ejs');
+      var days=[
+        {day:"Monday"},
+        {day :"Tuesday"},
+        {day:"Wednesday"},
+        {day :"Thursday"},
+        {day:"Friday"},
+        {day :"Saturday"},
+        {day:"Sunday"}
+      ];
+      console.log(days);
+      res.render('doctorpage.ejs',{days:days});
     }
   });
 });

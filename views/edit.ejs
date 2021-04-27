@@ -32,7 +32,7 @@
                         <h2>Edit account</h2>
                     </div>
                     <div style="width:30%; margin: 0 auto;">
-                        <form method="POST" action="/profile/<%= tic._id %>?_method=PUT" enctype="multipart/form-data" class="editt">
+                        <form  action="/profile/<%= tic._id %>" enctype="multipart/form-data" method="PUT" >
                             <div class="form-group">
                                 <input class="form-control " type="text" name="username" placeholder="User name" value="<%= tic.username %>" >
                             </div>
