@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var express = require('express');
 var router = express();
 var path=require('path');
+const methodOverride=require('method-override');
 
 var multer = require('multer');
 var { storage } = require('../cloudinary');
@@ -12,6 +13,7 @@ const userSchema = require('./schemas/user');
 
 var register = new mongoose.model('register', userSchema);
 router.use(express.static("public"));
+router.use(methodOverride('_method'));
  
 router.get('/HTMS',function(req,res){
   res.render('doc_or_pat.ejs');
@@ -97,9 +99,42 @@ router.get('/profile/:id', function (req, res) {
     if (err) {
       console.log(err);
     } else {
+      
       res.render('profile', { data: data });
     }
   });
+});
+
+router.get('/edit/:id',async(req,res)=>{
+
+  var id= req.params.id;
+  register.find({_id :id}, function(err,datas){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log("DATA BEFORE EDIT");
+      console.log(datas);
+      res.render('edit',{datas:datas});
+    }
+  })
+});
+
+router.put('/profile/:id', async(req,res)=>{
+ // res.send("IT WORKED");
+const {id}=req.params;
+//const {idd}=id;
+  register.findByIdAndUpdate(id,{username:req.body.username, address:req.body.address, mobilenumber:req.body.mobilenumber},{new:true},
+  function(err,docs){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log("Updated user:",docs);
+      res.redirect('/profile/'+req.params.id); 
+    }
+  });
+ 
 });
 
 router.get('/login', function (req, res) {

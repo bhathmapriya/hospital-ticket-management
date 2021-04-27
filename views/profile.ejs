@@ -29,11 +29,7 @@
 				</div>
 			<div class=" collapse navbar-collapse ">
 
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/">Help</a></li>
-					<li><a href="/">Profile</a></li>
-					<li><a href="/">Logout</a></li>
-				</ul>
+				
 
 			</div>
 		</div>
@@ -56,7 +52,8 @@
             <label style="font-size: large;">Mobile Number :</label><p><%= inf.mobilenumber %></p> 
             <label style="font-size: large;">Address       :</label><p><%= inf.address %></p> 
             <label style="font-size: large;">email         :</label><p><%= inf.email %></p> 
-			        
+			     
+			<button onclick="location.href='/edit/<%= inf._id %>'" >Edit</button>
        <% })%>
 	</div>
 
