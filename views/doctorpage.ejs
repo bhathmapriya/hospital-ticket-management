@@ -22,15 +22,90 @@
         </style>
 </head>
 <body>
-    <div class="container">
-        <div class="row border justify-content-between">
-        <% days.forEach (function(dayy){ %>
+
+    <nav class="navbar navbar-default navbar-expand-lg navbar-light bg-light" style="position: sticky;
+    top: 0px; min-height: 100px;
+    z-index: 1; background: linear-gradient(to right,#80d4ff,#00a3cc,#006680);">
+    <div class="container-fluid">
+        <% data.forEach(function(datas){ %>
+
+       
+      <div class="navbar-header">
+        <b><a class="navbar-brand" href=" ">Dr.<%= datas.name %> </a></b>
         
-          <div id="schedule" class="col-sm-2  bg-danger thumbnail">
-          <%= dayy[i].day %>
-          </div>
-          <% }) %>
-        </div>
+            
       </div>
-      
+     <!---- <div><%= datas._id %></div>!-->
+     
+    
+      <% }) %>
+    </div>
+  </nav>
+    
+    <div class="container">
+        <button onclick="schedule()">View Schedule</button>
+        <% data.forEach(function(datas){ %>
+            
+        <div id="mydiv" style="color: white;"><%= datas._id %></div>
+        <% }) %>
+        <div class="row border justify-content-between">
+        
+          <div id="schedule" value="Monday" class="col-sm-2  bg-danger thumbnail">
+            Monday
+          </div>
+          <div  id="schedule" value="Tuesday" class="col-sm-2  bg-danger thumbnail">
+            Tuesday
+          </div>
+          <div  id="schedule" value="Wednesday" class="col-sm-2  bg-danger  thumbnail">
+            Wednesday
+          </div>
+          <div  id="schedule" value="Thursday" class="col-sm-2  bg-danger  thumbnail">
+            Thursday
+          </div>
+          <div  id="schedule" value="Friday" class="col-sm-2  bg-danger  thumbnail">
+            Friday
+          </div>
+          <div  id="schedule" value="Saturday" class="col-sm-2  bg-danger  thumbnail">
+            Saturday
+          </div>
+          
+        </div>
+    </div>
+    <script>
+        function schedule(){
+           
+            //const params=`department=${formElements.namedItem('department').value}&date=${formElements.namedItem('date').value}&time=${formElements.namedItem('time').value}`
+            const params= $('div#schedule').text();
+            
+            const sentence=params.replace(/\s+/g, ' ').trim();
+            console.log(sentence);
+            var days= new Array();
+            days=sentence.split(" ");
+           var dayss=new Array();
+           // for(i=0;i<days.length;i++){
+             //   dayss[i]=i;
+           // }
+            
+           var _id= document.getElementById('mydiv').innerHTML ;
+            var i;
+          
+           //for(i=0; i< days.length; i++){
+             //  const info='availabledays=dayss[i]. & _id=idd' ;
+              // console.log(info);
+               fetch('/appointments?'+ _id ,{
+                   method:'GET',
+               }).then((data)=>{
+                   return data.json();
+               }).then((data)=>{
+                   if(data.length > 0){
+                     var newelement=document.createElement('div');
+                   }
+                  
+               })
+           //}
+           
+        }
+    </script>
+     
 </body>
+</html>

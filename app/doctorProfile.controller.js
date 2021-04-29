@@ -107,17 +107,9 @@ router.get('/doctorprofile/:id',function(req,res){
       console.log(err);
     }
     else{
-      var days=[
-        {day:"Monday"},
-        {day :"Tuesday"},
-        {day:"Wednesday"},
-        {day :"Thursday"},
-        {day:"Friday"},
-        {day :"Saturday"},
-        {day:"Sunday"}
-      ];
-      console.log(days);
-      res.render('doctorpage.ejs',{days:days});
+      console.log("datas of DOCTOR");
+      console.log(data);
+      res.render('doctorpage.ejs',{data:data});
     }
   });
 });
