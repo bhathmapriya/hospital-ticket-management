@@ -13,7 +13,6 @@ const appointments = require('./schemas/appointments');
 //to get approval
 const doctorWorkitemSchema = require('./schemas/doctor.workitem.js');
 
-
 const doctors = new mongoose.model('doctors', doctorsSchema, 'doctors');
 const doctorWorkitem = new mongoose.model(
   'doctorWorkitem',
@@ -30,8 +29,6 @@ const appointmentsModel = new mongoose.model(
   appointments,
   'appointments'
 );
- 
-
 
 router.get('/doctor', function (req, res) {
   console.log('doctorr signing up page');
@@ -90,7 +87,7 @@ router.post('/doctorlogin', async (req, res) => {
   var user = await doctors.findOne({ name });
   console.log(user);
 
-  var validuser = await bcrypt.compare(password, user.password);
+  var validuser = password === user?.password;
   if (validuser) {
     req.session.user_id = user._id;
     res.redirect('/doctorprofile/' + user._id);
@@ -99,17 +96,41 @@ router.post('/doctorlogin', async (req, res) => {
   }
 });
 
-router.get('/doctorprofile/:id',function(req,res){
-  var id= req.params.id;
-  doctors.find({_id:id},function(err,data){
-
-    if(err){
+router.get('/doctorprofile/:id', function (req, res) {
+  var id = req.params.id;
+  doctors.find({ _id: id }, function (err, data) {
+    if (err) {
       console.log(err);
-    }
-    else{
-      console.log("datas of DOCTOR");
+    } else {
+      console.log('datas of DOCTOR');
       console.log(data);
-      res.render('doctorpage.ejs',{data:data});
+      const hours = new Array(24).fill(0).map((v, i) => {
+        return i;
+      });
+      const week = new Array(8).fill(0).map((v, i) => i);
+      console.log('hours', hours);
+      appointmentsModel.find(
+        { doctorId: id },
+        function (err, doctorAppointment) {
+          console.log('doctorAppointment', doctorAppointment);
+          if (err) {
+            res.send(err);
+            res.render('doctorpage.ejs', {
+              data: data,
+              hours: hours,
+              week: week,
+              appointments: [],
+            });
+          } else {
+            res.render('doctorpage.ejs', {
+              data: data,
+              hours: hours,
+              week: week,
+              appointments: doctorAppointment,
+            });
+          }
+        }
+      );
     }
   });
 });
