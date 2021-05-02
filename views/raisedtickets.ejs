@@ -23,6 +23,7 @@
         .ticket-card {
             box-shadow: 0px 1px 5px 1px #00000029;
             padding: 20px 25px;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -32,13 +33,9 @@
         style=" min-height: 100px;background: linear-gradient(to right,#80d4ff,#00a3cc,#006680);">
         <div class="container-fluid">
             <div class="navbar-header">
-
-
-                <a class="navbar-brand" href="/ticketgen/<%= data[0].patientId %>"><span
-                        class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
-
-
-
+                <b><a class="navbar-brand" href="/">Hospital Ticket Manager </a></b>
+                <a class="navbar-brand" href="/ticketgen/<%= _id %>"><span class="glyphicon glyphicon-chevron-left"
+                        aria-hidden="true"></span></a>
             </div>
 
         </div>
@@ -55,7 +52,9 @@
                 </div>
                 <div>
                     <b>Department :</b>
-                    <%= det.department %>
+                    <span style="text-transform: uppercase;">
+                        <%= det.department %>
+                    </span>
                 </div>
                 <div>
                     <b>Date :</b>
@@ -67,7 +66,9 @@
                 </div>
                 <div>
                     <b>Status :</b>
-                    <%= det.status %>
+                    <span style="color: <%= det.status === 'Awaiting' ? 'orange' : 'black' %>">
+                        <%= det.status %>
+                    </span>
                 </div>
                 <div>
                     <b>Status Message :</b>
@@ -76,7 +77,11 @@
             </div>
             <%})%>
 
-
+                <% if (data.length<=0) { %>
+                    <div>
+                        No tickets raised.
+                    </div>
+                    <% } %>
 
 
     </div>

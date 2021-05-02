@@ -27,7 +27,7 @@ router.get('/searchDoctors', function (req, res, next) {
     availableDays: {
       $in: [new Date(req.query.date).getDay().toString()],
     },
-    availableFromHour: { $gte: parseInt(req.query.time.split(':')[0]) },
+    availableFromHour: { $lte: parseInt(req.query.time.split(':')[0]) },
     availableToHour: { $gte: parseInt(req.query.time.split(':')[0]) },
   };
   console.log(filter);
@@ -96,7 +96,7 @@ router.get('/existing/:id', function (req, res) {
       res.send(err);
     } else {
       console.log(data);
-      res.render('raisedtickets.ejs', { data: data });
+      res.render('raisedtickets.ejs', { data: data, _id: id });
     }
   });
 });
