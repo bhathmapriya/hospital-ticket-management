@@ -1,111 +1,187 @@
 <html>
 
 <head>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<!--<link rel="stylesheet" href="tablestyle.css" >--!-->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
-        <style type="text/css">
-            #schedule{
-                background: pink;
-                margin-right: 10 px;
-            }
-        </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!--<link rel="stylesheet" href="tablestyle.css" >--!-->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <style type="text/css">
+    #schedule {
+      background: pink;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      border: 0px;
+    }
+
+    .appointment-header {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: 60px;
+      text-align: center;
+      grid-gap: 10px;
+    }
+
+    .title-container {
+      display: flex;
+      align-items: center;
+      margin-top: 25px;
+    }
+
+    .title {
+      font-size: 2rem;
+      margin-right: 25px;
+    }
+
+    .glyphicon {
+      cursor: pointer;
+    }
+
+    .date-selector {
+      display: grid;
+      grid-template-columns: 50px 120px 50px;
+      text-align: center;
+      grid-gap: 10px;
+    }
+
+    .appointment-body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .appointment-row {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      text-align: center;
+      grid-gap: 10px;
+    }
+  </style>
 </head>
+
 <body>
 
-    <nav class="navbar navbar-default navbar-expand-lg navbar-light bg-light" style="position: sticky;
+  <nav class="navbar navbar-default navbar-expand-lg navbar-light bg-light" style="position: sticky;
     top: 0px; min-height: 100px;
     z-index: 1; background: linear-gradient(to right,#80d4ff,#00a3cc,#006680);">
     <div class="container-fluid">
-        <% data.forEach(function(datas){ %>
+      <% data.forEach(function(datas){ %>
 
-       
-      <div class="navbar-header">
-        <b><a class="navbar-brand" href=" ">Dr.<%= datas.name %> </a></b>
-        
-            
-      </div>
-     <!---- <div><%= datas._id %></div>!-->
-     
-    
-      <% }) %>
+
+        <div class="navbar-header">
+          <b><a class="navbar-brand" href=" ">Dr.<%= datas.name %> </a></b>
+
+
+        </div>
+        <!---- <div><%= datas._id %></div>!-->
+
+
+        <% }) %>
     </div>
   </nav>
-    
-    <div class="container">
-        <button onclick="schedule()">View Schedule</button>
-        <% data.forEach(function(datas){ %>
-            
-        <div id="mydiv" style="color: white;"><%= datas._id %></div>
-        <% }) %>
-        <div class="row border justify-content-between">
-        
-          <div id="schedule" value="Monday" class="col-sm-2  bg-danger thumbnail">
+
+  <div class="container">
+    <button onclick="schedule()">View Schedule</button>
+
+    <div class="title-container">
+      <div class="title">Appointment Table</div>
+      <div class="date-selector">
+        <div class="glyphicon glyphicon-chevron-left"></div>
+        <div>date</div>
+        <div class="glyphicon glyphicon-chevron-right"></div>
+      </div>
+    </div>
+    <% data.forEach(function(datas){ %>
+
+      <div id="mydiv" style="color: white;">
+        <%= datas._id %>
+      </div>
+      <% }) %>
+        <div class="appointment-header">
+          <div id="schedule" value="Time" style="background-color: #80808026;" class=" thumbnail">
+            Time
+          </div>
+          <div id="schedule" value="Monday" class="bg-danger thumbnail">
             Monday
           </div>
-          <div  id="schedule" value="Tuesday" class="col-sm-2  bg-danger thumbnail">
+          <div id="schedule" value="Tuesday" class="bg-danger thumbnail">
             Tuesday
           </div>
-          <div  id="schedule" value="Wednesday" class="col-sm-2  bg-danger  thumbnail">
+          <div id="schedule" value="Wednesday" class="bg-danger  thumbnail">
             Wednesday
           </div>
-          <div  id="schedule" value="Thursday" class="col-sm-2  bg-danger  thumbnail">
+          <div id="schedule" value="Thursday" class="bg-danger  thumbnail">
             Thursday
           </div>
-          <div  id="schedule" value="Friday" class="col-sm-2  bg-danger  thumbnail">
+          <div id="schedule" value="Friday" class="bg-danger  thumbnail">
             Friday
           </div>
-          <div  id="schedule" value="Saturday" class="col-sm-2  bg-danger  thumbnail">
+          <div id="schedule" value="Saturday" class="bg-danger  thumbnail">
             Saturday
           </div>
-          
+          <div id="schedule" value="Saturday" class="bg-danger  thumbnail">
+            Sunday
+          </div>
         </div>
-    </div>
-    <script>
-        function schedule(){
-           
-            //const params=`department=${formElements.namedItem('department').value}&date=${formElements.namedItem('date').value}&time=${formElements.namedItem('time').value}`
-            const params= $('div#schedule').text();
-            
-            const sentence=params.replace(/\s+/g, ' ').trim();
-            console.log(sentence);
-            var days= new Array();
-            days=sentence.split(" ");
-           var dayss=new Array();
-           // for(i=0;i<days.length;i++){
-             //   dayss[i]=i;
-           // }
-            
-           var _id= document.getElementById('mydiv').innerHTML ;
-            var i;
-          
-           //for(i=0; i< days.length; i++){
-             //  const info='availabledays=dayss[i]. & _id=idd' ;
-              // console.log(info);
-               fetch('/appointments?'+ _id ,{
-                   method:'GET',
-               }).then((data)=>{
-                   return data.json();
-               }).then((data)=>{
-                   if(data.length > 0){
-                     var newelement=document.createElement('div');
-                   }
-                  
-               })
-           //}
-           
+        <div class="appointment-body">
+          <% hours.forEach(function(hour){ %>
+            <div class="appointment-row">
+              <% week.forEach(function(item,i){ %>
+                <% if (i==0) { %>
+                  <div>
+                    <%=hour %>:00
+                  </div>
+                  <% }else { %>
+                    <div>Week</div>
+                    <%} }) %>
+            </div>
+            <% }) %>
+        </div>
+  </div>
+  <script>
+    function schedule() {
+
+      //const params=`department=${formElements.namedItem('department').value}&date=${formElements.namedItem('date').value}&time=${formElements.namedItem('time').value}`
+      const params = $('div#schedule').text();
+
+      const sentence = params.replace(/\s+/g, ' ').trim();
+      console.log(sentence);
+      var days = new Array();
+      days = sentence.split(" ");
+      var dayss = new Array();
+      // for(i=0;i<days.length;i++){
+      //   dayss[i]=i;
+      // }
+
+      var _id = document.getElementById('mydiv').innerHTML;
+      var i;
+
+      //for(i=0; i< days.length; i++){
+      //  const info='availabledays=dayss[i]. & _id=idd' ;
+      // console.log(info);
+      fetch('/appointments?' + _id, {
+        method: 'GET',
+      }).then((data) => {
+        return data.json();
+      }).then((data) => {
+        if (data.length > 0) {
+          var newelement = document.createElement('div');
         }
-    </script>
-     
+
+      })
+      //}
+
+    }
+  </script>
+
 </body>
+
 </html>
