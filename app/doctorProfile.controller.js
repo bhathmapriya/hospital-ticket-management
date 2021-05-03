@@ -86,8 +86,8 @@ router.post('/doctorlogin', async (req, res) => {
   var { password, name } = req.body;
   var user = await doctors.findOne({ name });
   console.log(user);
-
-  var validuser = password === user?.password;
+ var validuser = await bcrypt.compare(password, user.password);
+ // var validuser = password === user?.password;
   if (validuser) {
     req.session.user_id = user._id;
     res.redirect('/doctorprofile/' + user._id);
