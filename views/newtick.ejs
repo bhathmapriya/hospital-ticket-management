@@ -8,6 +8,18 @@
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
   <style>
+    @keyframes zoomin {
+      from {
+        transform: scale(.8);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
     select {
       display: block;
     }
@@ -25,6 +37,7 @@
       margin-right: 20px;
       padding: 20px;
       box-shadow: 1px 1px 7px 0px #00000038;
+      animation: 300ms ease zoomin;
     }
 
     .doc-card label {
@@ -38,6 +51,14 @@
       margin-top: 100px;
       padding: 10px;
       border: 1px solid green;
+      text-align: center;
+    }
+
+    .note {
+      margin-top: 26px;
+      padding: 10px;
+      border: 1px solid cyan;
+      background-color: #00ffff1a;
       text-align: center;
     }
   </style>
@@ -105,80 +126,107 @@
 
     </div>
     </form>
+    <div class="note">
+      Users are allowed to book multiple doctor with first selection as most prefered one.
+      Booking will be accepted based on the availability of the doctor. <br> If the doctor declines the booking, the
+      second
+      preferred doctor will be informed. Successful booking will be done only if the doctor accepts the booking.<br>
+      Booking information can be viewed in the "Existing tickets tab".
+    </div>
     <div id="doctor-list">
 
     </div>
+    <button type="button" class="btn btn-default btn-md btn-primary hide" onclick="bookappointment('<%=_id %>')">Book
+      appointment</button>
   </div>
+</body>
+<script>
+  // $(function () {
+  //   $("#datepicker").datepicker();
+  // });
+  window.doctorIds = [];
+  function bookappointment(doctorId, patientId) {
+    const formElements = document.getElementById('form').elements;
+    const body = {
+      department: formElements.namedItem('department').value,
+      date: formElements.namedItem('date').value,
+      time: formElements.namedItem('time').value,
+      symptoms: formElements.namedItem('symptoms').value,
+      patientId: patientId,
+      doctorId: doctorId
+    }
+    fetch('/newtick/' + patientId, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(body)
+    }).then((data) => {
+      return data.json();
+    }).then(data => {
+      document.getElementById('doctor-list-container').remove();
+      var newElement = document.createElement('div');
+      newElement.innerHTML = `<div class="success-label"> Booked appointment. Awaiting for doctors approval. </div>`;
+      document.getElementById('ticket-container').appendChild(newElement);
+    })
+  }
 
-  <script>
-    $(function () {
-      $("#datepicker").datepicker();
-    });
-    function bookappointment(doctorId, patientId) {
-      const formElements = document.getElementById('form').elements;
-      const body = {
-        department: formElements.namedItem('department').value,
-        date: formElements.namedItem('date').value,
-        time: formElements.namedItem('time').value,
-        symptoms: formElements.namedItem('symptoms').value,
-        patientId: patientId,
-        doctorId: doctorId
-      }
-      fetch('/newtick/' + patientId, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify(body)
-      }).then((data) => {
-        return data.json();
-      }).then(data => {
-        document.getElementById('doctor-list-container').remove();
-        var newElement = document.createElement('div');
-        newElement.innerHTML = `<div class="success-label"> Booked appointment. Awaiting for doctors approval. </div>`;
-        document.getElementById('ticket-container').appendChild(newElement);
+  function selectDoctor(doctorId) {
+    if (doctorIds.indexOf(doctorId) == -1) {
+      doctorIds.push(doctorId);
+      document.getElementById('doc-' + doctorId).innerText = "Selected - P" + doctorIds.length;
+      document.getElementById('doc-' + doctorId).style.backgroundColor = "#00890094";
+    } else {
+      console.log("deselect", doctorId)
+      document.getElementById('doc-' + doctorId).innerHTML = "Select";
+      doctorIds.splice(doctorIds.indexOf(doctorId), 1);
+      doctorIds.forEach((id, i) => {
+        document.getElementById('doc-' + id).innerText = "Selected - P" + (i + 1);
       })
     }
-    function searchDoctors() {
-      const formElements = document.getElementById('form').elements
-      const params = `department=${formElements.namedItem('department').value}&date=${formElements.namedItem('date').value}&time=${formElements.namedItem('time').value}`
-      fetch('/searchDoctors?' + params, {
-        method: 'GET',
-      }).then((data) => {
-        return data.json();
-      }).then(data => {
-        const doctorListElement = document.getElementById('doctor-list');
-        doctorListElement.setAttribute('class', 'doctor-remove-item');
-        if (data.length > 0) {
-          // removeElements();
-          var newElement = document.createElement('div');
-          newElement.setAttribute('id', 'doctor-list-container');
-          newElement.classList.add('doctor-list-container');
-          newElement.innerHTML = data.map(doctor => {
-            let htmlValue = `<div class='doc-card'>
+  }
+
+  function searchDoctors() {
+    const formElements = document.getElementById('form').elements
+    const params = `department=${formElements.namedItem('department').value}&date=${formElements.namedItem('date').value}&time=${formElements.namedItem('time').value}`
+    fetch('/searchDoctors?' + params, {
+      method: 'GET',
+    }).then((data) => {
+      return data.json();
+    }).then(data => {
+      const doctorListElement = document.getElementById('doctor-list');
+      doctorListElement?.setAttribute('class', 'doctor-remove-item');
+      if (data.length > 0) {
+        // removeElements();
+        var newElement = document.createElement('div');
+        newElement.setAttribute('id', 'doctor-list-container');
+        newElement.classList.add('doctor-list-container');
+        newElement.innerHTML = data.map(doctor => {
+          let htmlValue = `<div class='doc-card'>
               <div><label>Name: </label> ${doctor.name}</div>
               <div><label>Department: </label> ${doctor.department}</div>
               <div><label>Experience: </label> ${doctor.experience}</div>
               <div><label>Email: </label> ${doctor.email}</div>
-              <button type="button" class="btn btn-default btn-md btn-primary" onclick="bookappointment('${doctor._id}','<%=_id %>')">Book Appointment</button>
+              <button type="button" id="doc-${doctor._id}" class="btn btn-default btn-md btn-primary" onclick="selectDoctor('${doctor._id}')">Select</button>
               </div>`;
-            return htmlValue;
-          }).join('');
-          doctorListElement.appendChild(newElement);
-        } else {
-          removeElements();
-          var newElement = document.createElement('div');
-          newElement.setAttribute('class', 'doctor-remove-item');
-          newElement.innerHTML = "Doctor isn't avaiable for your search criteria !";
-          doctorListElement.appendChild(newElement);
-        }
-      })
-    }
-
-    function removeElements() {
-      if (document.getElementsByClassName('doctor-remove-item')[0]) {
-        [...document.getElementsByClassName('doctor-remove-item')][0].remove();
+          return htmlValue;
+        }).join('');
+        doctorListElement.appendChild(newElement);
+      } else {
+        removeElements();
+        var newElement = document.createElement('div');
+        newElement.setAttribute('class', 'doctor-remove-item');
+        newElement.innerHTML = "Doctor isn't avaiable for your search criteria !";
+        doctorListElement.appendChild(newElement);
       }
+    })
+  }
+
+
+  function removeElements() {
+    if (document.getElementsByClassName('doctor-remove-item')[0]) {
+      [...document.getElementsByClassName('doctor-remove-item')][0].remove();
     }
-  </script>
-  <%- include('partials/footer') %>
+  }
+</script>
+<%- include('partials/footer') %>

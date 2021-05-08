@@ -9,6 +9,7 @@ var appointments = new mongoose.Schema({
   status: String,
   statusMessage: String,
   doctorId: String,
+  preferredDoctor: [], // The order of high priority start from 0th element.
 });
 
 module.exports = appointments;

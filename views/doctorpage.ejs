@@ -64,6 +64,13 @@
       text-align: center;
       grid-gap: 10px;
     }
+
+    .navbar-header {
+      display: flex;
+      width: 96vw;
+      justify-content: space-between;
+      align-items: center;
+    }
   </style>
 </head>
 
@@ -78,13 +85,14 @@
 
         <div class="navbar-header">
           <b><a class="navbar-brand" href=" ">Dr.<%= datas.name %> </a></b>
-
+          <div style="font-size: large;text-align: center;"><a href="/">Logout</a></div>
 
         </div>
         <!---- <div><%= datas._id %></div>!-->
 
 
         <% }) %>
+
     </div>
   </nav>
 

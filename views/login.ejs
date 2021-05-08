@@ -1,15 +1,15 @@
 <%- include('partials/header', {isLogin:true})%>
-<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
 
 	<script type="text/javascript">
 
 
-$(".back").click(function(){
-	$(".signUp").addClass("active-sx");
-	$(".signIn").addClass("inactive-dx");
-	$(".signIn").removeClass("active-dx");
-	$(".signUp").removeClass("inactive-sx");
-});
+		$(".back").click(function () {
+			$(".signUp").addClass("active-sx");
+			$(".signIn").addClass("inactive-dx");
+			$(".signIn").removeClass("active-dx");
+			$(".signUp").removeClass("inactive-sx");
+		});
 		function validateForm() {
 			if (window.loginCaptcha) {
 				return true;
@@ -50,13 +50,19 @@ $(".back").click(function(){
 					Please finish captcha verification.
 				</div>
 
-				<div class="form-group">
-					<button type="submit" class="btn btn-lg btn-primary btn-block form-btn dx" >LOGIN</button>
-				</div>
-				<div class="form-group">
-					<button class="btn btn-lg btn-primary btn-block form-btn sx back" onclick="location.href='/signup'">SIGNUP</button>
-					
-				</div>
+				<% if(typeof error=='string' && error){ %>
+					<div style="color: red;">
+						<%=error%>
+					</div>
+					<%}%>
+						<div class="form-group">
+							<button type="submit" class="btn btn-lg btn-primary btn-block form-btn dx">LOGIN</button>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-lg btn-primary btn-block form-btn sx back"
+								onclick="location.href='/signup'">SIGNUP</button>
+
+						</div>
 
 			</form>
 

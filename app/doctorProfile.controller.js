@@ -86,13 +86,13 @@ router.post('/doctorlogin', async (req, res) => {
   var { password, name } = req.body;
   var user = await doctors.findOne({ name });
   console.log(user);
- var validuser = await bcrypt.compare(password, user.password);
- // var validuser = password === user?.password;
+  var validuser = await bcrypt.compare(password, user?.password || '');
+  // var validuser = password === user?.password;
   if (validuser) {
     req.session.user_id = user._id;
     res.redirect('/doctorprofile/' + user._id);
   } else {
-    res.redirect('/doctorlogin');
+    res.render('doctorlogin.ejs', { error: 'Invalid username or password.' });
   }
 });
 
@@ -110,7 +110,7 @@ router.get('/doctorprofile/:id', function (req, res) {
       const week = new Array(8).fill(0).map((v, i) => i);
       console.log('hours', hours);
       appointmentsModel.find(
-        { doctorId: id },
+        { 'preferredDoctor.0': id },
         function (err, doctorAppointment) {
           console.log('doctorAppointment', doctorAppointment);
           if (err) {
