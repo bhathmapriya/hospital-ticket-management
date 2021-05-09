@@ -44,6 +44,12 @@
       font-size: 14px;
     }
 
+    #book-appointment {
+      margin-left: 50%;
+      margin-top: 50px;
+      transform: translateX(-50%);
+    }
+
     .success-label {
       color: green;
       width: 50%;
@@ -136,7 +142,8 @@
     <div id="doctor-list">
 
     </div>
-    <button type="button" class="btn btn-default btn-md btn-primary hide" onclick="bookappointment('<%=_id %>')">Book
+    <button type="button" id="book-appointment" class="btn btn-default btn-md btn-primary hide"
+      onclick="bookappointment('<%=_id %>')">Book
       appointment</button>
   </div>
 </body>
@@ -153,7 +160,7 @@
       time: formElements.namedItem('time').value,
       symptoms: formElements.namedItem('symptoms').value,
       patientId: patientId,
-      doctorId: doctorId
+      preferredDoctor: doctorIds
     }
     fetch('/newtick/' + patientId, {
       headers: {
@@ -164,6 +171,7 @@
     }).then((data) => {
       return data.json();
     }).then(data => {
+      document.getElementById('book-appointment').classList.add('hide');
       document.getElementById('doctor-list-container').remove();
       var newElement = document.createElement('div');
       newElement.innerHTML = `<div class="success-label"> Booked appointment. Awaiting for doctors approval. </div>`;
@@ -183,6 +191,11 @@
       doctorIds.forEach((id, i) => {
         document.getElementById('doc-' + id).innerText = "Selected - P" + (i + 1);
       })
+    }
+    if (doctorIds.length > 0) {
+      document.getElementById('book-appointment').classList.remove('hide');
+    } else {
+      document.getElementById('book-appointment').classList.add('hide');
     }
   }
 

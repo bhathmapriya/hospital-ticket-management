@@ -76,7 +76,7 @@ router.post('/newtick/:id', async (req, res) => {
     patientId: id,
     status: 'Awaiting',
     statusMessage: 'Awaiting for doctors response',
-    doctorId: req.body.doctorId,
+    preferredDoctor: req.body.preferredDoctor,
   });
   appointments.save((err) => {
     if (err) {
