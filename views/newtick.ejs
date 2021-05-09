@@ -152,7 +152,7 @@
   //   $("#datepicker").datepicker();
   // });
   window.doctorIds = [];
-  function bookappointment(doctorId, patientId) {
+  function bookappointment(patientId) {
     const formElements = document.getElementById('form').elements;
     const body = {
       department: formElements.namedItem('department').value,

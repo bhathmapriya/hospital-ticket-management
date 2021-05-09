@@ -1,9 +1,10 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
   <!--<link rel="stylesheet" href="tablestyle.css" >--!-->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -71,6 +72,43 @@
       justify-content: space-between;
       align-items: center;
     }
+
+    .toggle-container {
+      display: flex;
+      border: 1px solid #2391c9;
+      width: 275px;
+    }
+
+    .toggle-container>div {
+      padding: 10px;
+      background-color: white;
+      color: black;
+      cursor: pointer;
+      width: 50%;
+      text-align: center;
+    }
+
+    .toggle-container>div.active {
+      background-color: #2391c9;
+      color: white;
+    }
+
+    .label {
+      color: gray;
+      font-size: 12px;
+    }
+
+    .booking-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.5fr;
+      grid-template-rows: 32px 32px;
+      box-shadow: 0px 0px 5px 1px #00000021;
+      border-radius: 4px;
+      margin-top: 25px;
+      padding: 16px 20px;
+      align-items: center;
+      grid-gap: 15px;
+    }
   </style>
 </head>
 
@@ -84,8 +122,8 @@
 
 
         <div class="navbar-header">
-          <b><a class="navbar-brand" href=" ">Dr.<%= datas.name %> </a></b>
-          <div style="font-size: large;text-align: center;"><a href="/">Logout</a></div>
+          <b><a class="navbar-brand" style="color: white;" href=" ">Dr.<%= datas.name %> </a></b>
+          <div style="font-size: large;text-align: center;"><a href="/doctorlogin">Logout</a></div>
 
         </div>
         <!---- <div><%= datas._id %></div>!-->
@@ -97,96 +135,149 @@
   </nav>
 
   <div class="container">
-    <button onclick="schedule()">View Schedule</button>
-
-    <div class="title-container">
-      <div class="title">Appointment Table</div>
-      <div class="date-selector">
-        <div class="glyphicon glyphicon-chevron-left"></div>
-        <div>date</div>
-        <div class="glyphicon glyphicon-chevron-right"></div>
-      </div>
+    <div class="toggle-container">
+      <div id="appointment-tab" onclick="switchTab('appointment-tab')" class="active">Appointments</div>
+      <div id="booking-tab" onclick="switchTab('booking-tab')">Bookings</div>
     </div>
-    <% data.forEach(function(datas){ %>
 
-      <div id="mydiv" style="color: white;">
-        <%= datas._id %>
+    <div id="appointment-container">
+      <div class="title-container">
+        <div class="title">Appointment Table</div>
+        <!-- <div class="date-selector">
+          <div class="glyphicon glyphicon-chevron-left"></div>
+          <div>date</div>
+          <div class="glyphicon glyphicon-chevron-right"></div>
+        </div> -->
       </div>
-      <% }) %>
-        <div class="appointment-header">
-          <div id="schedule" value="Time" style="background-color: #80808026;" class=" thumbnail">
-            Time
-          </div>
-          <div id="schedule" value="Monday" class="bg-danger thumbnail">
-            Monday
-          </div>
-          <div id="schedule" value="Tuesday" class="bg-danger thumbnail">
-            Tuesday
-          </div>
-          <div id="schedule" value="Wednesday" class="bg-danger  thumbnail">
-            Wednesday
-          </div>
-          <div id="schedule" value="Thursday" class="bg-danger  thumbnail">
-            Thursday
-          </div>
-          <div id="schedule" value="Friday" class="bg-danger  thumbnail">
-            Friday
-          </div>
-          <div id="schedule" value="Saturday" class="bg-danger  thumbnail">
-            Saturday
-          </div>
-          <div id="schedule" value="Saturday" class="bg-danger  thumbnail">
-            Sunday
-          </div>
-        </div>
-        <div class="appointment-body">
-          <% hours.forEach(function(hour){ %>
-            <div class="appointment-row">
-              <% week.forEach(function(item,i){ %>
-                <% if (i==0) { %>
-                  <div>
-                    <%=hour %>:00
-                  </div>
-                  <% }else { %>
-                    <div>Week</div>
-                    <%} }) %>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Sno</th>
+            <th>Patient Id</th>
+            <th>Symptoms</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% appointments.forEach(function(appointment,i){ %>
+            <% if(appointment.status==='Approved' ){ %>
+              <tr>
+                <td>
+                  <%=i+1 %>
+                </td>
+                <td>
+                  <%=appointment.patientId%>
+                </td>
+                <td>
+                  <%=appointment.symptoms%>
+                </td>
+                <td>
+                  <%=appointment.date%>
+                </td>
+                <td>
+                  <%=appointment.visitHour%> : <%=appointment.visitMinutes%>
+                </td>
+              </tr>
+              <% } %>
+                <% }) %>
+        </tbody>
+      </table>
+
+    </div>
+    <div id="booking-container" class="hide">
+      <% appointments.forEach(function(appointment){ %>
+        <% if(appointment.status==='Awaiting' ){ %>
+          <div id="appointment-<%=appointment._id %>" class="booking-card">
+            <div>
+              <label class="label">Symptoms</label>
+              <span>
+                <%=appointment.symptoms %>
+              </span>
             </div>
+            <div>
+              <label class="label">Department</label>
+              <span>
+                <%=appointment.department %>
+              </span>
+            </div>
+            <div>
+              <label class="label">Date</label>
+              <span>
+                <%=appointment.date %>
+              </span>
+            </div>
+            <div>
+              <label class="label">Time</label>
+              <span>
+                <%=appointment.visitHour %>
+              </span>
+              <span>
+                <%=appointment.visitMinutes %>
+              </span>
+            </div>
+            <div>
+              <button class="btn-sm btn-primary" type="button"
+                onclick="approve('<%=appointment._id %>','<%=data[0].name %>')">Approve</button>
+              <button class="btn-sm btn-light" type="button"
+                onclick="reject('<%=appointment._id %>','<%=appointment.preferredDoctor %>')">Reject</button>
+            </div>
+
+          </div>
+          <%}%>
             <% }) %>
-        </div>
+    </div>
   </div>
   <script>
-    function schedule() {
 
-      //const params=`department=${formElements.namedItem('department').value}&date=${formElements.namedItem('date').value}&time=${formElements.namedItem('time').value}`
-      const params = $('div#schedule').text();
-
-      const sentence = params.replace(/\s+/g, ' ').trim();
-      console.log(sentence);
-      var days = new Array();
-      days = sentence.split(" ");
-      var dayss = new Array();
-      // for(i=0;i<days.length;i++){
-      //   dayss[i]=i;
-      // }
-
-      var _id = document.getElementById('mydiv').innerHTML;
-      var i;
-
-      //for(i=0; i< days.length; i++){
-      //  const info='availabledays=dayss[i]. & _id=idd' ;
-      // console.log(info);
-      fetch('/appointments?' + _id, {
-        method: 'GET',
+    function approve(id, name) {
+      fetch('/approve_appointment/', {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({ _id: id, doctorName: name })
       }).then((data) => {
         return data.json();
-      }).then((data) => {
-        if (data.length > 0) {
-          var newelement = document.createElement('div');
-        }
-
+      }).then(data => {
+        document.getElementById('appointment-' + id).remove()
+        console.log(data);
       })
-      //}
+    }
 
+    function reject(id, preferredDoctor) {
+      fetch('/reject_appointment/', {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({ _id: id, preferredDoctor: preferredDoctor.split(',') })
+      }).then((data) => {
+        return data.json();
+      }).then(data => {
+        document.getElementById('appointment-' + id).remove()
+        console.log(data);
+      })
+    }
+
+    function addNoBookingBanner() {
+      document.getElementById('booking-container').innerHTML("<div style='text-align:center'>No booking available.</div>")
+    }
+
+    function switchTab(tab) {
+      if (tab === "appointment-tab") {
+        document.getElementById('appointment-tab').classList.add('active');
+        document.getElementById('booking-tab').classList.remove('active');
+        document.getElementById('booking-container').classList.add('hide');
+        document.getElementById('appointment-container').classList.remove('hide');
+      } else if (tab === "booking-tab") {
+        document.getElementById('booking-tab').classList.add('active');
+        document.getElementById('appointment-tab').classList.remove('active');
+        document.getElementById('appointment-container').classList.add('hide');
+        document.getElementById('booking-container').classList.remove('hide');
+      }
     }
   </script>
 

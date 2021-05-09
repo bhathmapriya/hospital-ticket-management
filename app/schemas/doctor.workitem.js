@@ -15,6 +15,7 @@ var doctorWorkitem = new mongoose.Schema({
   experience: Number,
   docimage: [{ url: String, filename: String }],
   mobile: Number,
+  appointments: [],
 });
 
 module.exports = doctorWorkitem;

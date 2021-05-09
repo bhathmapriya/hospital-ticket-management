@@ -85,7 +85,6 @@ router.get('/doctorlogin', function (req, res) {
 router.post('/doctorlogin', async (req, res) => {
   var { password, name } = req.body;
   var user = await doctors.findOne({ name });
-  console.log(user);
   var validuser = await bcrypt.compare(password, user?.password || '');
   // var validuser = password === user?.password;
   if (validuser) {
@@ -242,6 +241,40 @@ router.get('/list', function (req, res) {
       res.render('doctorList.ejs', { list: data });
     }
   });
+});
+
+router.post('/approve_appointment', function (req, res) {
+  var body = req.body;
+  appointmentsModel.useFindAndModify(
+    { _id: body._id },
+    {
+      status: 'Approved',
+      statusMessage:
+        'Your appointment is successfully booked with ' + body.doctorName,
+    },
+    function (err, data) {
+      console.log(data);
+      res.json({ success: true });
+    }
+  );
+});
+
+router.post('/reject_appointment', function (req, res) {
+  var body = req.body;
+  const preferredDoctor = [...req.body.preferredDoctor];
+  preferredDoctor.splice(0, 1);
+  appointmentsModel.useFindAndModify(
+    { _id: body._id },
+    {
+      status: 'Awaiting',
+      statusMessage: 'Your appointment is transferred to next doctor.',
+      preferredDoctor: preferredDoctor,
+    },
+    function (err, data) {
+      console.log(data);
+      res.json({ success: true });
+    }
+  );
 });
 
 module.exports = router;
